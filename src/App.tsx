@@ -1,7 +1,13 @@
+import { MantineProvider } from "@mantine/core";
+import { RouterProvider } from "react-router";
+import { routers } from "./router/router";
+
 function App() {
   return (
     <>
-      <div className="text-5xl text-center">OMNIQLE</div>
+      <MantineProvider>
+        <RouterProvider router={routers} />
+      </MantineProvider>
     </>
   );
 }
