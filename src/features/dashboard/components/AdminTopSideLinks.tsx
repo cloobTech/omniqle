@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { BsPower, BsHouse, BsBriefcase, BsReceipt } from "react-icons/bs";
+import {  BsHouse, BsBriefcase, BsReceipt } from "react-icons/bs";
 import { SideLinkProps } from "../types";
 
 const AdminTopSideLinks: React.FC<SideLinkProps> = ({
