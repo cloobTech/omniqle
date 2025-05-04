@@ -1,8 +1,9 @@
+import React from "react";
 import { MantineProvider } from "@mantine/core";
 import { RouterProvider } from "react-router";
 import { routers } from "./router/router";
 
-function App() {
+const App: React.FC = () => {
   return (
     <>
       <MantineProvider>
@@ -10,6 +11,6 @@ function App() {
       </MantineProvider>
     </>
   );
-}
+};
 
 export default App;

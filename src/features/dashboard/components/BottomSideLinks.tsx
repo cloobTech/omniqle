@@ -7,22 +7,34 @@ const BottomSideLinks: React.FC<SideLinkProps> = ({
   isExpanded,
   setIsExpanded,
 }) => {
+  // Classes for active and inactive links
   const activeClass =
-    "flex items-center gap-2 p-2 text-white bg-primary rounded transition-all duration-300 text-brand-blue text-sm ";
+    "flex items-center gap-2 p-2 text-white bg-primary rounded transition-all duration-300 text-brand-blue text-sm";
   const inactiveClass =
-    "flex items-center gap-2 p-2  rounded transition-all duration-300 text-sm";
+    "flex items-center gap-2 p-2 rounded transition-all duration-300 text-sm";
+
+  // Class names for expanded/collapsed text
+  const expandCollapseClass = isExpanded
+    ? "max-w-xs opacity-100"
+    : "max-w-0 opacity-0";
 
   return (
-    <div className={`pb-8 flex flex-col gap-4  transition-all duration-300`}>
+    <div className={`pb-8 flex flex-col gap-4 transition-all duration-300`}>
       {/* Links */}
       <NavLink
+        onClick={() => setIsExpanded(false)}
         to="/dashboard/"
         className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
-        onClick={() => setIsExpanded(false)}
         end
       >
-        <BsGear />
-        {isExpanded && <span>Settings</span>}
+        <div className="flex items-center gap-2">
+          <BsGear />
+          <span
+            className={`transition-all duration-300 overflow-hidden ${expandCollapseClass}`}
+          >
+            Settings
+          </span>
+        </div>
       </NavLink>
       <NavLink
         onClick={() => setIsExpanded(false)}
@@ -30,17 +42,29 @@ const BottomSideLinks: React.FC<SideLinkProps> = ({
         className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
         end
       >
-        <BsHeadset />
-        {isExpanded && <span>Support</span>}
+        <div className="flex items-center gap-2">
+          <BsHeadset />
+          <span
+            className={`transition-all duration-300 overflow-hidden ${expandCollapseClass}`}
+          >
+            Support
+          </span>
+        </div>
       </NavLink>
       <NavLink
-        to="/dashboard/"
         onClick={() => setIsExpanded(false)}
+        to="/dashboard/"
         className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
         end
       >
-        <BsPower />
-        {isExpanded && <span>Logout</span>}
+        <div className="flex items-center gap-2">
+          <BsPower />
+          <span
+            className={`transition-all duration-300 overflow-hidden ${expandCollapseClass}`}
+          >
+            Logout
+          </span>
+        </div>
       </NavLink>
     </div>
   );

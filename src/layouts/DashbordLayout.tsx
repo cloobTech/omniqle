@@ -20,6 +20,9 @@ const DashbordLayout: React.FC = () => {
       >
         {/* Expand & Collapse Navbar */}
         <button
+          title="Expand/Collapse"
+          aria-label="Expand/Collapse"
+          type="button"
           onClick={toggleNavbar}
           className={`p-2 rounded absolute  top-4 flex items-center justify-center cursor-pointer ${
             isExpanded ? "bg-primary text-white" : "bg-white text-primary"
