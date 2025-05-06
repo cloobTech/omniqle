@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "@mantine/form";
-import { Button, TextInput } from "@mantine/core";
+import { Button, TextInput, Checkbox } from "@mantine/core";
 import { useLoginMutation } from "../slice";
 import { useNavigate } from "react-router-dom";
 
 const LoginUser: React.FC = () => {
   const navigate = useNavigate();
   const [login, { isLoading, error }] = useLoginMutation();
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
   const form = useForm({
     mode: "uncontrolled",
@@ -17,7 +18,7 @@ const LoginUser: React.FC = () => {
 
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-      password: (value) => (value ? null : "Enter Email"),
+      password: (value) => (value ? null : "Enter Password"),
     },
   });
 
@@ -40,11 +41,8 @@ const LoginUser: React.FC = () => {
   return (
     <form
       onSubmit={form.onSubmit(handleSubmit)}
-      className="flex flex-col justify-center  w-[80%] md:w-[588px] rounded-lg p-8 bg-white shadow-md gap-4"
+      className="flex flex-col justify-center w-[80%] md:w-[588px] rounded-lg p-8 bg-white shadow-md gap-4"
     >
-      <p className="text-center font-bold uppercase text-2xl text-gray-800">
-        OMNIQLE secure login
-      </p>
       <Button unstyled className="btn">
         Login with Google
       </Button>
@@ -57,17 +55,20 @@ const LoginUser: React.FC = () => {
       />
       <TextInput
         placeholder="Enter your password"
-        type="password"
+        type={showPassword ? "text" : "password"} // Toggle between "text" and "password"
         key={form.key("password")}
         {...form.getInputProps("password")}
       />
 
-      <Button
-        unstyled
-        className={`btn `}
-        type="submit"
-        // disabled={(form.isTouched() || form.isValid())}
-      >
+      <Checkbox
+        label="Show password"
+        className="text-gray-600 font-bold"
+        size="xs"
+        checked={showPassword} // Bind the checkbox to the state
+        onChange={(event) => setShowPassword(event.currentTarget.checked)} // Update state on change
+      />
+
+      <Button unstyled className={`btn`} type="submit">
         {isLoading ? "Logging in..." : "Login"}
       </Button>
       {error && (

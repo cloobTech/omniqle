@@ -3,7 +3,7 @@
 
 @theme {
   --color-primary: #008080;
-  --color-primary-light: #E5F1F1;
+  --color-primary-light: #e5f1f1;
   --color-primary-dark: #3b82f6;
 }
 
@@ -44,6 +44,10 @@
       transform: translateY(2px); /* Simulates button press */
       filter: brightness(0.7); /* Slightly darkens on press */
     }
+  }
+
+  .card-gradient {
+    background-image: linear-gradient(#ebffff, #ebffff, #ffffd6);
   }
 }
 

@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import { Login } from "@features/auth";
-import DashbordLayout from "@src/layouts/DashbordLayout";
+import { DashbordLayout } from "@features/dashboard";
+import { DashboardHome } from "@features/home";
 
 export const routers = createBrowserRouter([
   {
@@ -10,5 +11,6 @@ export const routers = createBrowserRouter([
   {
     path: "/dashboard",
     element: <DashbordLayout />,
+    children: [{ path: "", element: <DashboardHome /> }],
   },
 ]);
