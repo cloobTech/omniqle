@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import { Login } from "@features/auth";
 import { DashbordLayout } from "@features/dashboard";
 import { DashboardHome } from "@features/home";
+import { ManageClassrom } from "@features/classes";
 
 export const routers = createBrowserRouter([
   {
@@ -11,6 +12,12 @@ export const routers = createBrowserRouter([
   {
     path: "/dashboard",
     element: <DashbordLayout />,
-    children: [{ path: "", element: <DashboardHome /> }],
+    children: [
+      { path: "", element: <DashboardHome /> },
+      {
+        path: "manage-classroom",
+        element: <ManageClassrom />,
+      },
+    ],
   },
 ]);

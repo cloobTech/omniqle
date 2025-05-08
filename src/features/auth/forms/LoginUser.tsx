@@ -3,6 +3,7 @@ import { useForm } from "@mantine/form";
 import { Button, TextInput, Checkbox } from "@mantine/core";
 import { useLoginMutation } from "../slice";
 import { useNavigate } from "react-router-dom";
+import googleIcon from "../assets/7123025_logo_google_g_icon.svg";
 
 const LoginUser: React.FC = () => {
   const navigate = useNavigate();
@@ -43,9 +44,10 @@ const LoginUser: React.FC = () => {
       onSubmit={form.onSubmit(handleSubmit)}
       className="flex flex-col justify-center w-[80%] md:w-[588px] rounded-lg p-8 bg-white shadow-md gap-4"
     >
-      <Button unstyled className="btn">
-        Login with Google
-      </Button>
+      <button className="btn bg-gray-800 flex font-bold items-center justify-center gap-4">
+        <img src={googleIcon} alt="" className="size-8" />
+        <span>Login with Google</span>
+      </button>
 
       <p className="text-center font-bold text-gray-500">OR</p>
       <TextInput

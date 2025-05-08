@@ -34,7 +34,7 @@
     cursor: pointer;
     transition: background-color 0.1s ease, transform 0.1s ease,
       filter 0.1s ease;
-    font-weight: 700;
+    font-weight: 900;
 
     &:hover {
       filter: brightness(1.2); /* Increases brightness on hover */

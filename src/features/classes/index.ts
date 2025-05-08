@@ -1,0 +1,1 @@
+export {default as ManageClassrom} from "./pages/ManageClasses"

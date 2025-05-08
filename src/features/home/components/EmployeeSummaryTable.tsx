@@ -21,18 +21,15 @@ const EmployeeSummary: React.FC = () => {
   ));
   return (
     <div className="bg-white p-4 rounded mt-4">
-      <div className="flex items-center px-2 justify-between py-4">
-        <h1 className="font-bold text-sm">All Employees</h1>
-        <button className="btn">Add employee</button>
-      </div>
+      <h1 className="font-bold text-sm px-2 mb-2">All Employees</h1>
       <Table stickyHeader stickyHeaderOffset={60} highlightOnHover>
         <Table.Thead>
-          <Table.Tr>
-            <Table.Th className="font-semibold  p-3">Name</Table.Th>
-            <Table.Th className="">Role</Table.Th>
-            <Table.Th className="">Email</Table.Th>
-            <Table.Th className="text-sm font-semibold">Grade</Table.Th>
-            <Table.Th className="text-sm font-semibold">Action</Table.Th>
+          <Table.Tr className="!bg-blue-500">
+            <Table.Th className="!bg-primary-light">Name</Table.Th>
+            <Table.Th className="!bg-primary-light">Role</Table.Th>
+            <Table.Th className="!bg-primary-light">Email</Table.Th>
+            <Table.Th className="!bg-primary-light">Grade</Table.Th>
+            <Table.Th className="!bg-primary-light">Action</Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>

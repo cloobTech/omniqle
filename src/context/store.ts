@@ -1,8 +1,8 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { authApi } from '@features/auth';
-// If you have more reducers, import them here
+import { authApi } from "@features/auth";
+import modalReducer from "@src/slice/modal";
 
 const persistConfig = {
   key: "root",
@@ -11,6 +11,8 @@ const persistConfig = {
 
 const appReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
+  modal: modalReducer,
+
   // Add other reducers here
 });
 

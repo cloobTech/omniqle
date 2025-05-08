@@ -1,8 +1,12 @@
 import React from "react";
 import { StatCard, RenderListItems } from "@features/shared";
 
-import { BsPeople, BsBuilding } from "react-icons/bs";
-import { FaChalkboardTeacher, FaMoneyBillWave } from "react-icons/fa";
+import {
+  BsPeople,
+  BsBuilding,
+  BsGenderMale,
+  BsGenderFemale,
+} from "react-icons/bs";
 
 const statsData = [
   {
@@ -14,10 +18,17 @@ const statsData = [
   },
   {
     id: 2,
-    title: "Total Employees",
-    value: 85,
-    description: "Number of active employees",
-    icon: <FaChalkboardTeacher />, // Icon for a teacher at a chalkboard
+    title: "Total Male",
+    value: 685,
+    description: "Number of active teachers",
+    icon: <BsGenderMale />, // Icon for a teacher at a chalkboard
+  },
+  {
+    id: 2,
+    title: "Total Female",
+    value: 595,
+    description: "Number of active teachers",
+    icon: <BsGenderFemale />, // Icon for a teacher at a chalkboard
   },
   {
     id: 3,
@@ -25,13 +36,6 @@ const statsData = [
     value: 45,
     description: "Number of active classrooms",
     icon: <BsBuilding />, // Icon for a building (representing classrooms)
-  },
-  {
-    id: 4,
-    title: "Pending Fees",
-    value: "$12,500",
-    description: "Total pending fees",
-    icon: <FaMoneyBillWave />, // Icon for money or fees
   },
 ];
 

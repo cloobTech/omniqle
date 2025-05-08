@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import {  BsHouse, BsBriefcase, BsReceipt } from "react-icons/bs";
+import { BsHouse, BsBriefcase, BsReceipt, BsBuilding } from "react-icons/bs";
 import { SideLinkProps } from "../types";
 
 const AdminTopSideLinks: React.FC<SideLinkProps> = ({
@@ -38,6 +38,20 @@ const AdminTopSideLinks: React.FC<SideLinkProps> = ({
       </NavLink>
       <NavLink
         onClick={() => setIsExpanded(false)}
+        to="/dashboard/manage-classroom"
+        className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
+      >
+        <div className="flex items-center gap-2">
+          <BsBuilding />
+          <span
+            className={`transition-all duration-300 overflow-hidden ${expandCollapseClass}`}
+          >
+            Classes
+          </span>
+        </div>
+      </NavLink>
+      <NavLink
+        onClick={() => setIsExpanded(false)}
         to="/dashboard/"
         className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
         end
@@ -47,7 +61,7 @@ const AdminTopSideLinks: React.FC<SideLinkProps> = ({
           <span
             className={`transition-all duration-300 overflow-hidden ${expandCollapseClass}`}
           >
-            Employee
+            Employees
           </span>
         </div>
       </NavLink>
