@@ -25,6 +25,7 @@ const LoginUser: React.FC = () => {
 
   const handleSubmit = async (values: { email: string; password: string }) => {
     const credentials = { ...values, school_slug: "dlca" };
+
     try {
       const response = await login(credentials).unwrap();
       if (response.token) {
@@ -38,6 +39,8 @@ const LoginUser: React.FC = () => {
       }
     }
   };
+
+  const validForm = form.isValid();
 
   return (
     <form
@@ -70,7 +73,12 @@ const LoginUser: React.FC = () => {
         onChange={(event) => setShowPassword(event.currentTarget.checked)} // Update state on change
       />
 
-      <Button unstyled className={`btn`} type="submit">
+      <Button
+        unstyled
+        disabled={isLoading}
+        className={`btn ${!validForm && "disabled"}`}
+        type="submit"
+      >
         {isLoading ? "Logging in..." : "Login"}
       </Button>
       {error && (

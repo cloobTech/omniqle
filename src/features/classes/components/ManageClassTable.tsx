@@ -78,7 +78,9 @@ const ManageClassTable: React.FC = () => {
         <h1 className="font-bold px-2 mb-2">All Classes</h1>
         <button
           className="btn"
-          onClick={() => showModal(<CreateClassRoom />, {})}
+          onClick={() =>
+            showModal(<CreateClassRoom />, { title: "Create Classroom" })
+          }
         >
           Add Classes
         </button>

@@ -46,6 +46,11 @@
     }
   }
 
+  .disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
   .card-gradient {
     background-image: linear-gradient(#ebffff, #ebffff, #ffffd6);
   }

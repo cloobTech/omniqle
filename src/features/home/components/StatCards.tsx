@@ -40,7 +40,7 @@ const StatCards: React.FC = () => {
     <div className="bg-white p-2 rounded-lg grid md:grid-cols-2 lg:grid-cols-4 gap-4">
       <RenderListItems
         data={statsData}
-        renderItem={(item) => <StatCard {...item} />}
+        renderItem={(item) => <StatCard {...item} key={item.id} />}
       />
     </div>
   );

@@ -16,7 +16,11 @@ const GlobalModal: React.FC<GlobalModalProps> = ({ size = "80%" }) => {
       size={size}
       {...state.modalProps}
     >
-      {state?.content}
+      {React.isValidElement(state.content) ? (
+        state.content
+      ) : (
+        <p>Invalid content provided for the modal.</p>
+      )}
     </Modal>
   );
 };

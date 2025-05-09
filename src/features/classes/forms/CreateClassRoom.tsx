@@ -1,50 +1,77 @@
-import React from "react";
+import React, { useState } from "react";
+import { BsPlusCircle, BsInfoCircle } from "react-icons/bs";
+import { Select, TextInput, Textarea, Popover, Text } from "@mantine/core";
+
+function Info() {
+  return (
+    <Popover width={200} position="bottom" withArrow shadow="md">
+      <Popover.Target>
+        <div className="inline-flex gap-2 text-xs bg-primary-light p-1 rounded mb-2">
+          <BsInfoCircle className="text-primary" />
+          <small className="text-gray-500">what is class level?</small>
+        </div>
+      </Popover.Target>
+      <Popover.Dropdown>
+        <Text size="xs">explain level</Text>
+      </Popover.Dropdown>
+    </Popover>
+  );
+}
+
+const ClassForm: React.FC = () => {
+  return (
+    <div className="space-y-4 flex-1 mb-4">
+      <Select
+        withAsterisk
+        label="Class Level"
+        placeholder="Pick a level"
+        data={Array.from({ length: 15 }, (_, i) => ({
+          value: `${i + 1}`,
+          label: `Level ${i + 1}`,
+        }))}
+        clearable
+      />
+      <TextInput
+        withAsterisk
+        label="Enter ClassName"
+        placeholder="E.G JSS 1A"
+      />
+    </div>
+  );
+};
 
 const CreateClassRoom: React.FC = () => {
+  const [forms, setForms] = useState<number[]>([1]); // Array to track form instances
+
+  const addClassForm = () => {
+    setForms((prev) => [...prev, prev.length + 1]); // Add a new form
+  };
+
   return (
-    <div className="">
-    <h3 className="text-center font-bold mb-2">Suggested Fields for the Classroom Table</h3>
-    <ul className="list-disc pl-6">
-      <li>
-        <strong>Class Code/ID:</strong> A unique identifier for each class (e.g., JSS1A-001). Useful for referencing classes in reports or systems.
-      </li>
-      <li>
-        <strong>Number of Boys:</strong> The total number of male students in the class. Helps in gender-based analysis.
-      </li>
-      <li>
-        <strong>Number of Girls:</strong> The total number of female students in the class. Complements the "Number of Boys" field.
-      </li>
-      <li>
-        <strong>Class Capacity:</strong> The maximum number of students the class can accommodate. Useful for identifying overcrowded classes.
-      </li>
-      <li>
-        <strong>Subjects Offered:</strong> A list or count of subjects being taught in the class. Helps in curriculum planning.
-      </li>
-      <li>
-        <strong>Classroom Location:</strong> The physical location of the class (e.g., Block A, Room 12). Useful for navigation and facility management.
-      </li>
-      <li>
-        <strong>Class Start Time:</strong> The time the class starts (e.g., 8:00 AM). Useful for scheduling and attendance tracking.
-      </li>
-      <li>
-        <strong>Class End Time:</strong> The time the class ends (e.g., 2:00 PM). Complements the "Class Start Time" field.
-      </li>
-      <li>
-        <strong>Attendance Rate:</strong> The percentage of students attending the class regularly. Useful for monitoring student engagement.
-      </li>
-      <li>
-        <strong>Performance Metrics:</strong> Average grades or performance indicators for the class. Helps in identifying high-performing or struggling classes.
-      </li>
-      <li>
-        <strong>Actions:</strong> Options for managing the class, such as:
-        <ul className="list-disc pl-6">
-          <li>Edit: Modify class details.</li>
-          <li>Delete: Remove the class.</li>
-          <li>View Details: Navigate to a detailed view of the class.</li>
-        </ul>
-      </li>
-    </ul>
-  </div>
+    <section className="flex flex-col h-[80vh]">
+      <Info />
+      <div className="flex-1 overflow-y-auto space-y-6 pr-2">
+        {forms.map((formId, index) => (
+          <div key={formId} className="mb-6">
+            {index > 0 && <hr className="border-t border-gray-300 my-4" />}{" "}
+            {/* Divider */}
+            <ClassForm />
+          </div>
+        ))}
+      </div>
+      <div className="flex flex-col justify-end gap-4 bg-white pt-4">
+        <div
+          className="flex items-center text-sm text-gray-700 gap-2 justify-end mt-2 cursor-pointer"
+          onClick={addClassForm}
+        >
+          <BsPlusCircle />
+          Add class
+        </div>
+        <div className="flex justify-end">
+          <button className="btn rounded py-1">Create classrooms</button>
+        </div>
+      </div>
+    </section>
   );
 };
 
