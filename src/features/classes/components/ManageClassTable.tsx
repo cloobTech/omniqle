@@ -11,7 +11,7 @@ const ManageClassTable: React.FC = () => {
   const { showModal } = useModal();
   const sortIcon = (title: string): React.ReactNode => {
     return (
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 text-xs font-light text-gray-500">
         <p>{title}</p>
         <BsArrowDownUp />
       </div>
@@ -79,7 +79,10 @@ const ManageClassTable: React.FC = () => {
         <button
           className="btn"
           onClick={() =>
-            showModal(<CreateClassRoom />, { title: "Create Classroom" })
+            showModal(<CreateClassRoom />, {
+              size: "80%",
+              withCloseButton: false,
+            })
           }
         >
           Add Classes
@@ -97,10 +100,10 @@ const ManageClassTable: React.FC = () => {
             <Table.Th className="!bg-primary-light">
               {sortIcon("Assigned Teacher")}
             </Table.Th>
-            <Table.Th className="!bg-primary-light">
+            <Table.Th className="!bg-primary-light !text-sm">
               {sortIcon("Student")}
             </Table.Th>
-            <Table.Th className="!bg-primary-light">
+            <Table.Th className="!bg-primary-light !text-xs">
               {sortIcon("Action")}
             </Table.Th>
           </Table.Tr>
