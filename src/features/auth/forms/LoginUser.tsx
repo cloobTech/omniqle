@@ -30,7 +30,8 @@ const LoginUser: React.FC = () => {
       const response = await login(credentials).unwrap();
 
       if (response.token) {
-        localStorage.setItem("token", response.token);
+        localStorage.setItem("token", response?.token);
+        localStorage.setItem("schoolId", response?.current_school?.id);
         navigate("/dashboard");
       }
 

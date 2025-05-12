@@ -3,6 +3,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { authApi } from "@features/auth";
 import { classApi } from "@features/classes";
+import { userApi } from "@features/users";
 import modalReducer from "@src/slice/modal";
 
 const persistConfig = {
@@ -13,6 +14,7 @@ const persistConfig = {
 const appReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
   [classApi.reducerPath]: classApi.reducer,
+  [userApi.reducerPath]: userApi.reducer,
   modal: modalReducer,
 
   // Add other reducers here
@@ -36,7 +38,7 @@ export const store = configureStore({
   middleware(getDefaultMiddleware) {
     return getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(authApi.middleware, classApi.middleware);
+    }).concat(authApi.middleware, classApi.middleware, userApi.middleware);
   },
 });
 

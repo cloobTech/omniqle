@@ -12,7 +12,7 @@ const DashbordLayout: React.FC = () => {
 
         <SideBar />
 
-        <section className="flex-1 p-6 flex flex-col">
+        <section className="flex-1 pt-2 p-6 flex flex-col">
           <Navbar />
           {/* Main Content */}
           <div className="flex-1 ">
