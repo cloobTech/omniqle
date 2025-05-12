@@ -1,5 +1,5 @@
 import { BsInfoCircle } from "react-icons/bs";
-import { Popover, Text } from "@mantine/core";
+import { Popover, Text, Group, useMantineTheme } from "@mantine/core";
 
 export default function ClassInfo({
   title,
@@ -8,14 +8,27 @@ export default function ClassInfo({
   title: string;
   content: string;
 }) {
+  const theme = useMantineTheme();
   return (
     <div>
       <Popover width={200} position="bottom" withArrow shadow="md">
         <Popover.Target>
-          <div className="inline-flex gap-2 text-xs bg-primary-light p-1 rounded mb-2">
-            <BsInfoCircle className="text-primary" />
-            <small className="text-gray-500">{title}</small>
-          </div>
+          <Group
+            gap="xs"
+            bg="primary.1"
+            p={4}
+            mb="xs"
+            style={{
+              display: "inline-flex",
+              borderRadius: theme.radius.sm,
+              fontSize: theme.fontSizes.xs,
+            }}
+          >
+            <BsInfoCircle color={theme.colors.primary[5]} size={14} />
+            <Text c="gray.6" size="xs">
+              {title}
+            </Text>
+          </Group>
         </Popover.Target>
         <Popover.Dropdown>
           <Text size="xs">{content}</Text>

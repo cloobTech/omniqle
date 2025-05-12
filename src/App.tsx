@@ -1,14 +1,11 @@
 import React from "react";
-import { MantineProvider } from "@mantine/core";
-import { RouterProvider } from "react-router";
+import { RouterProvider } from "react-router-dom";
 import { routers } from "./router/router";
 
 const App: React.FC = () => {
   return (
     <>
-      <MantineProvider>
-        <RouterProvider router={routers} />
-      </MantineProvider>
+      <RouterProvider router={routers} />
     </>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "@mantine/form";
 import { Button, TextInput, Checkbox } from "@mantine/core";
-import { useLoginMutation } from "../slice";
+import { useLoginMutation } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import googleIcon from "../assets/7123025_logo_google_g_icon.svg";
 
@@ -28,7 +28,9 @@ const LoginUser: React.FC = () => {
 
     try {
       const response = await login(credentials).unwrap();
+
       if (response.token) {
+        localStorage.setItem("token", response.token);
         navigate("/dashboard");
       }
 
@@ -47,10 +49,15 @@ const LoginUser: React.FC = () => {
       onSubmit={form.onSubmit(handleSubmit)}
       className="flex flex-col justify-center w-[80%] md:w-[588px] rounded-lg p-8 bg-white shadow-md gap-4"
     >
-      <button className="btn bg-gray-800 flex font-bold items-center justify-center gap-4">
-        <img src={googleIcon} alt="" className="size-8" />
-        <span>Login with Google</span>
-      </button>
+      <Button
+        color="dark.8" // equivalent to bg-gray-800
+        size="md" // default medium size
+        fw="bold" // font-bold
+        leftSection={<img src={googleIcon} alt="Google" className="size-8" />}
+        className="gap-4" // additional gap if needed
+      >
+        Login with Google
+      </Button>
 
       <p className="text-center font-bold text-gray-500">OR</p>
       <TextInput
@@ -73,12 +80,7 @@ const LoginUser: React.FC = () => {
         onChange={(event) => setShowPassword(event.currentTarget.checked)} // Update state on change
       />
 
-      <Button
-        unstyled
-        disabled={isLoading}
-        className={`btn ${!validForm && "disabled"}`}
-        type="submit"
-      >
+      <Button type="submit" disabled={!validForm || isLoading}>
         {isLoading ? "Logging in..." : "Login"}
       </Button>
       {error && (

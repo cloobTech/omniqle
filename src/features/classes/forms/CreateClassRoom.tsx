@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BsPlusCircle, BsBack } from "react-icons/bs";
-import { Select, TextInput } from "@mantine/core";
+import { Select, TextInput, Button } from "@mantine/core";
 import { useForm, UseFormReturnType } from "@mantine/form";
 import ClassInfo from "../components/ClassInfoPopOver";
 import { useModal } from "@src/index";
@@ -114,7 +114,7 @@ const CreateClassRoom: React.FC = () => {
                 <div className="flex justify-end">
                   <button
                     type="button"
-                    className="text-red-500 text-sm underline cursor-pointer"
+                    className="text-red-500 !font-bold !text-xs underline cursor-pointer"
                     onClick={() => removeClassForm(formId)}
                   >
                     Remove
@@ -135,9 +135,7 @@ const CreateClassRoom: React.FC = () => {
             Add class
           </div>
           <div className="flex justify-end py-4">
-            <button type="submit" className="btn rounded py-1">
-              Create classrooms
-            </button>
+            <Button>Create classrooms</Button>
           </div>
         </div>
       </form>

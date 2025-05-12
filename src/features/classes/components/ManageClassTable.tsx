@@ -1,13 +1,21 @@
 import React from "react";
-import { Table } from "@mantine/core";
+import { Button, Table } from "@mantine/core";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
 import { BsArrowDownUp } from "react-icons/bs";
 import { Pagination } from "@mantine/core";
 import CreateClassRoom from "../forms/CreateClassRoom";
 import { useModal } from "@src/index";
+import { useGetGradesQuery } from "../services/api";
 
 const ManageClassTable: React.FC = () => {
+  const token = localStorage.getItem("token");
+
+  const { data } = useGetGradesQuery("4", {
+    skip: !token,
+  });
+
+  if (data) console.log(data);
   const { showModal } = useModal();
   const sortIcon = (title: string): React.ReactNode => {
     return (
@@ -76,8 +84,7 @@ const ManageClassTable: React.FC = () => {
     <div className="bg-white p-4 rounded-lg mt-4">
       <div className="flex items-center justify-between mb-4">
         <h1 className="font-bold px-2 mb-2">All Classes</h1>
-        <button
-          className="btn"
+        <Button
           onClick={() =>
             showModal(<CreateClassRoom />, {
               size: "80%",
@@ -86,24 +93,44 @@ const ManageClassTable: React.FC = () => {
           }
         >
           Add Classes
-        </button>
+        </Button>
       </div>
       <Table stickyHeader stickyHeaderOffset={60} highlightOnHover>
         <Table.Thead>
-          <Table.Tr className="!bg-blue-500">
-            <Table.Th className="!bg-primary-light">
+          <Table.Tr>
+            <Table.Th
+              style={{
+                backgroundColor: "var(--primary-light)",
+              }}
+            >
               {<FiExternalLink />}
             </Table.Th>
-            <Table.Th className="!bg-primary-light">
+            <Table.Th
+              style={{
+                backgroundColor: "var(--primary-light)",
+              }}
+            >
               {sortIcon("Classes")}
             </Table.Th>
-            <Table.Th className="!bg-primary-light">
+            <Table.Th
+              style={{
+                backgroundColor: "var(--primary-light)",
+              }}
+            >
               {sortIcon("Assigned Teacher")}
             </Table.Th>
-            <Table.Th className="!bg-primary-light !text-sm">
+            <Table.Th
+              style={{
+                backgroundColor: "var(--primary-light)",
+              }}
+            >
               {sortIcon("Student")}
             </Table.Th>
-            <Table.Th className="!bg-primary-light !text-xs">
+            <Table.Th
+              style={{
+                backgroundColor: "var(--primary-light)",
+              }}
+            >
               {sortIcon("Action")}
             </Table.Th>
           </Table.Tr>
@@ -117,7 +144,7 @@ const ManageClassTable: React.FC = () => {
             showing <span className="font-bold">1-10</span> of{" "}
             <span className="font-bold">240</span> entries
           </small>
-          <Pagination total={10} color="black" />
+          <Pagination total={10} />
         </div>
       </section>
     </div>
