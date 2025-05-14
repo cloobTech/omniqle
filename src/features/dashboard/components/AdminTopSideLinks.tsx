@@ -38,7 +38,7 @@ const AdminTopSideLinks: React.FC<SideLinkProps> = ({
       </NavLink>
       <NavLink
         onClick={() => setIsExpanded(false)}
-        to="/dashboard/manage-classroom"
+        to="/dashboard/classrooms"
         className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
       >
         <div className="flex items-center gap-2">
