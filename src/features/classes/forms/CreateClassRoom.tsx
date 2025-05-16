@@ -54,6 +54,7 @@ const ClassForm: React.FC<{
 
 const CreateClassRoom: React.FC = () => {
   const [createGrades, { isLoading }] = useCreateGradesMutation();
+
   const { hideModal } = useModal();
   const [forms, setForms] = useState<number[]>([0]); // Track form IDs
 
@@ -105,7 +106,7 @@ const CreateClassRoom: React.FC = () => {
         color: "green",
         position: "top-right",
       });
-
+      // await refetch();
       hideModal();
     } catch (err: unknown) {
       notifications.show({

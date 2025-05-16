@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "@src/constants";
-import { ICreateGrade } from "../forms/CreateClassRoom";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
@@ -14,25 +13,40 @@ const baseQuery = fetchBaseQuery({
 });
 
 export const classApi = createApi({
-  reducerPath: "classes",
+  reducerPath: "classrooms",
   baseQuery: baseQuery,
+  tagTypes: ["Grades"],
   endpoints: (builder) => ({
     getGrades: builder.query({
-      query: (schoolId) => `schools/${schoolId}/grades`,
+      query: ({ schoolId }) => `schools/${schoolId}/grades`,
+      providesTags: (result, error, { schoolId }) => [
+        { type: "Grades", id: schoolId }, // Changed to use object destructuring
+      ],
     }),
+    getSingleGrades: builder.query({
+      query: ({ schoolId, gradeId }) => `schools/${schoolId}/grades/${gradeId}`,
+      providesTags: (result, error, { schoolId }) => [
+        { type: "Grades", id: schoolId },
+      ],
+    }),
+    // ... other endpoints
     createGrades: builder.mutation({
-      query: ({
-        schoolId,
-        data,
-      }: {
-        schoolId: string;
-        data: ICreateGrade;
-      }) => ({
+      query: ({ schoolId, data }) => ({
         url: `schools/${schoolId}/grades`,
         method: "POST",
         body: data,
       }),
+      invalidatesTags: (result, error, { schoolId }) => {
+        console.log("Invalidating tags for schoolId:", schoolId);
+        return [
+          { type: "Grades", id: schoolId }, // Make sure this matches exactly
+        ];
+      },
     }),
   }),
 });
-export const { useGetGradesQuery, useCreateGradesMutation } = classApi;
+export const {
+  useGetGradesQuery,
+  useCreateGradesMutation,
+  useGetSingleGradesQuery,
+} = classApi;

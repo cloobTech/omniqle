@@ -1,9 +1,15 @@
 import React from "react";
 import ManageClassTable from "../components/ManageClassRoomTable";
+import { useParams } from "react-router-dom";
 
 const ManageClassRoom: React.FC = () => {
+  const { level } = useParams<{ level: string }>();
   return (
     <div className="mt-4">
+      <h1 className="text-xl font-bold text-center">
+        Classroom Details for {level}
+      </h1>
+
       <div className="h-[30vh] flex items-center justify-center">
         <h3 className="text-center">
           My plan here is to list the different classes under a level

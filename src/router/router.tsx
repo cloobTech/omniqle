@@ -19,7 +19,7 @@ export const routers = createBrowserRouter([
         element: <ManageAllClassrooms />,
       },
       {
-        path: "manage-classroom",
+        path: "manage-classroom/:level",
         element: <ManageClassroom />,
       },
     ],

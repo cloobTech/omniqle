@@ -22,7 +22,7 @@ interface GradeLevel {
 const ClassRoomCard: React.FC<ClassRoomCardProps> = ({ level, classrooms }) => {
   const navigate = useNavigate();
   return (
-    <div onClick={() => navigate("/dashboard/manage-classroom")}>
+    <div onClick={() => navigate(`/dashboard/manage-classroom/${level}`)}>
       <div className="flex flex-col justify-between h-32 bg-gray-100 rounded shadow p-4 cursor-pointer">
         <div className="flex items-center justify-between gap-4">
           <h3 className="font-bold text-gray-500">{level}</h3>
@@ -47,7 +47,7 @@ const ClassRoomCards: React.FC<{ data: GradeLevel[] }> = ({ data }) => {
             <ClassRoomCard
               level={level}
               classrooms={grades.length}
-              key={grades.id}
+              key={level}
             />
           )}
         />
