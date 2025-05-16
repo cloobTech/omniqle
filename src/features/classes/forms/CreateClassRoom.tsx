@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { BsPlusCircle, BsBack } from "react-icons/bs";
 import { Select, TextInput, Button } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 import { useForm, UseFormReturnType } from "@mantine/form";
 import ClassInfo from "../components/ClassInfoPopOver";
 import { useModal } from "@src/index";
+import { useCreateGradesMutation } from "../services/api";
 
 interface FormValues {
   forms: {
@@ -12,6 +14,15 @@ interface FormValues {
       name: string;
     };
   };
+}
+
+interface CreateGrade {
+  name: string;
+  level: number;
+}
+
+export interface ICreateGrade {
+  grades: CreateGrade[];
 }
 
 const ClassForm: React.FC<{
@@ -42,6 +53,7 @@ const ClassForm: React.FC<{
 };
 
 const CreateClassRoom: React.FC = () => {
+  const [createGrades, { isLoading }] = useCreateGradesMutation();
   const { hideModal } = useModal();
   const [forms, setForms] = useState<number[]>([0]); // Track form IDs
 
@@ -69,17 +81,43 @@ const CreateClassRoom: React.FC = () => {
     }
   };
 
-  const handleSubmit = (values: FormValues) => {
+  // submit form
+  const handleSubmit = async (values: FormValues) => {
     // Transform the forms object into an array of grades
-    console.log(values);
-
-    const grades = Object.values(values.forms).map((form) => ({
+    const gradesArray = Object.values(values.forms).map((form) => ({
       name: form.name,
       level: parseInt(form.level, 10), // Convert level to a number
     }));
 
-    console.log({ grades });
-    // Process or send the data to the backend
+    // Wrap the grades array in an object
+    const payload = {
+      grades: gradesArray,
+    };
+
+    const schoolId = "4";
+
+    // Pass the wrapped object to createGrades
+    try {
+      await createGrades({ schoolId, data: payload }).unwrap();
+      notifications.show({
+        title: "Success",
+        message: "Classrooms created successfully!",
+        color: "green",
+        position: "top-right",
+      });
+
+      hideModal();
+    } catch (err: unknown) {
+      notifications.show({
+        title: "Error",
+        position: "top-right",
+        message: `${
+          (err as any)?.data?.errors?.[0] ??
+          "Something went wrong. Please try again."
+        }`,
+        color: "red",
+      });
+    }
   };
 
   return (
@@ -135,7 +173,9 @@ const CreateClassRoom: React.FC = () => {
             Add class
           </div>
           <div className="flex justify-end py-4">
-            <Button>Create classrooms</Button>
+            <Button type="submit" disabled={isLoading}>{`${
+              isLoading ? "Submiting..." : "Create classrooms"
+            }`}</Button>
           </div>
         </div>
       </form>

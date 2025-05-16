@@ -24,14 +24,14 @@ const statsData = [
     icon: <BsGenderMale />, // Icon for a teacher at a chalkboard
   },
   {
-    id: 2,
+    id: 3,
     title: "Total Female",
     value: 595,
     description: "Number of active teachers",
     icon: <BsGenderFemale />, // Icon for a teacher at a chalkboard
   },
   {
-    id: 3,
+    id: 4,
     title: "Classes",
     value: 45,
     description: "Number of active classrooms",

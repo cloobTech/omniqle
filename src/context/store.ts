@@ -5,10 +5,12 @@ import { authApi } from "@features/auth";
 import { classApi } from "@features/classes";
 import { userApi } from "@features/users";
 import modalReducer from "@src/slice/modal";
+import { setupListeners } from "@reduxjs/toolkit/query";
 
 const persistConfig = {
   key: "root",
   storage,
+  whitelist: [authApi.reducerPath, classApi.reducerPath, userApi.reducerPath],
 };
 
 const appReducer = combineReducers({
@@ -16,11 +18,8 @@ const appReducer = combineReducers({
   [classApi.reducerPath]: classApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
   modal: modalReducer,
-
-  // Add other reducers here
 });
 
-// RESET redux state on logout
 const rootReducer = (
   state: ReturnType<typeof appReducer> | undefined,
   action: any
@@ -43,6 +42,9 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+
+// ✅ This enables refetchOnFocus/refetchOnReconnect features in RTK Query
+setupListeners(store.dispatch);
 
 // Infer types from store
 export type RootState = ReturnType<typeof store.getState>;

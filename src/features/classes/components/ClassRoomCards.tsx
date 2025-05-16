@@ -1,10 +1,22 @@
 import React from "react";
 import { BsBuilding } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import RenderListItem from "@features/shared/components/RenderListItems";
 
 interface ClassRoomCardProps {
   level: string;
   classrooms: number;
+}
+
+interface Grade {
+  id: number;
+  name: string;
+  level: number;
+}
+
+interface GradeLevel {
+  level: string;
+  grades: Grade[];
 }
 
 const ClassRoomCard: React.FC<ClassRoomCardProps> = ({ level, classrooms }) => {
@@ -25,17 +37,21 @@ const ClassRoomCard: React.FC<ClassRoomCardProps> = ({ level, classrooms }) => {
   );
 };
 
-const ClassRoomCards: React.FC = () => {
+const ClassRoomCards: React.FC<{ data: GradeLevel[] }> = ({ data }) => {
   return (
     <div className="bg-white p-2 rounded-lg grid md:grid-cols-2 lg:grid-cols-5 gap-4">
-      <ClassRoomCard level="Primary 1" classrooms={3} />
-      <ClassRoomCard level="Primary 2" classrooms={3} />
-      <ClassRoomCard level="Primary 3" classrooms={7} />
-      <ClassRoomCard level="JSS 1" classrooms={2} />
-      <ClassRoomCard level="JSS 2" classrooms={4} />
-      <ClassRoomCard level="SS 1" classrooms={5} />
-      <ClassRoomCard level="SS 2" classrooms={3} />
-      <ClassRoomCard level="SS 3" classrooms={5} />
+      {data && (
+        <RenderListItem
+          data={data}
+          renderItem={({ level, grades }) => (
+            <ClassRoomCard
+              level={level}
+              classrooms={grades.length}
+              key={grades.id}
+            />
+          )}
+        />
+      )}
     </div>
   );
 };
