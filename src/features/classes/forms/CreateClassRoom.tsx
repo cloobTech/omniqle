@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { BsPlusCircle, BsBack } from "react-icons/bs";
+import { BsPlusCircle } from "react-icons/bs";
 import { Select, TextInput, Button } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { useForm, UseFormReturnType } from "@mantine/form";
 import ClassInfo from "../components/ClassInfoPopOver";
 import { useModal } from "@src/index";
 import { useCreateGradesMutation } from "../services/api";
+import { CloseModal } from "@src/index";
 
 interface FormValues {
   forms: {
@@ -131,13 +132,7 @@ const CreateClassRoom: React.FC = () => {
           />
           <ClassInfo title="What is Class Level?" content="some explanation" />
         </div>
-        <div
-          className="flex items-center gap-2 border border-gray-400 rounded p-1 cursor-pointer"
-          onClick={hideModal}
-        >
-          <BsBack />
-          <small className=" text-gray-600">Close</small>
-        </div>
+        <CloseModal />
       </div>
       <form
         onSubmit={form.onSubmit(handleSubmit)}

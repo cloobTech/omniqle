@@ -1,34 +1,75 @@
 import React from "react";
 import { Table } from "@mantine/core";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const EmployeeSummary: React.FC = () => {
-  const elements = [
-    { position: 6, mass: 12.011, symbol: 6, name: "Study On Carbon" },
-    { position: 7, mass: 14.007, symbol: 5, name: "Study On Nitrogen" },
-    { position: 39, mass: 88.906, symbol: 38, name: "Study On Yttrium" },
-    { position: 56, mass: 137.33, symbol: 12, name: "Study On Barium" },
-    { position: 58, mass: 140.12, symbol: 40, name: "Study On Cerium" },
+  // Example employee data for a school
+  const employees = [
+    {
+      id: 1,
+      name: "John Doe",
+      role: "Math Teacher",
+      email: "john.doe@school.com",
+      department: "Mathematics",
+    },
+    {
+      id: 2,
+      name: "Jane Smith",
+      role: "Science Teacher",
+      email: "jane.smith@school.com",
+      department: "Science",
+    },
+    {
+      id: 3,
+      name: "Michael Brown",
+      role: "Principal",
+      email: "michael.brown@school.com",
+      department: "Administration",
+    },
+    {
+      id: 4,
+      name: "Emily Davis",
+      role: "English Teacher",
+      email: "emily.davis@school.com",
+      department: "English",
+    },
   ];
 
-  const rows = elements.map((element) => (
-    <Table.Tr key={element.name} className=" -b  rounded-md">
-      <Table.Td className="p-3 ">{element.name}</Table.Td>
-      <Table.Td className="p-3 ">{element.position}</Table.Td>
-      <Table.Td className="p-3 ">{element.symbol}</Table.Td>
-      <Table.Td className="p-3 ">{element.mass}</Table.Td>
-      <Table.Td className="p-3 ">{element.mass}</Table.Td>
+  // Action buttons for each row
+  const action = (
+    <div className="flex gap-4 text-gray-600">
+      <div className="flex gap-1 items-center">
+        <FaEdit />
+        <small>Edit</small>
+      </div>
+      <div className="flex gap-1 items-center">
+        <FaTrash />
+        <small>Delete</small>
+      </div>
+    </div>
+  );
+
+  // Map employee data to table rows
+  const rows = employees.map((employee) => (
+    <Table.Tr key={employee.id} className="rounded-md">
+      <Table.Td className="p-3">{employee.name}</Table.Td>
+      <Table.Td className="p-3">{employee.role}</Table.Td>
+      <Table.Td className="p-3">{employee.email}</Table.Td>
+      <Table.Td className="p-3">{employee.department}</Table.Td>
+      <Table.Td className="p-3">{action}</Table.Td>
     </Table.Tr>
   ));
+
   return (
     <div className="bg-white p-4 rounded mt-4">
-      <h1 className="font-bold text-sm px-2 mb-2">All Employees</h1>
+      <h1 className="font-bold text-sm px-2 mb-2">Employees in School</h1>
       <Table stickyHeader stickyHeaderOffset={60} highlightOnHover>
         <Table.Thead>
           <Table.Tr className="!bg-blue-500">
             <Table.Th className="!bg-primary-light">Name</Table.Th>
             <Table.Th className="!bg-primary-light">Role</Table.Th>
             <Table.Th className="!bg-primary-light">Email</Table.Th>
-            <Table.Th className="!bg-primary-light">Grade</Table.Th>
+            <Table.Th className="!bg-primary-light">Department</Table.Th>
             <Table.Th className="!bg-primary-light">Action</Table.Th>
           </Table.Tr>
         </Table.Thead>

@@ -4,6 +4,7 @@ import CreateClassRoom from "../forms/CreateClassRoom";
 import { useModal } from "@src/index";
 import { useGetGradesQuery } from "../services/api";
 import ClassRoomCards from "./ClassRoomCards";
+import { ClassRoomCardsSkeleton } from "./Skeletons";
 
 const ManageClassRoomCards: React.FC = () => {
   const [token, setToken] = React.useState<string | null>(null);
@@ -13,14 +14,20 @@ const ManageClassRoomCards: React.FC = () => {
     setToken(storedToken);
   }, []);
 
-  const { data } = useGetGradesQuery(
+  const { data, isLoading } = useGetGradesQuery(
     {
       schoolId: "4",
     },
     { skip: !token }
   );
 
+  console.log({ data, isLoading });
+
   const { showModal } = useModal();
+
+  if (isLoading) {
+    return <ClassRoomCardsSkeleton />;
+  }
 
   return (
     <div className="h-full bg-white p-4 rounded-lg">

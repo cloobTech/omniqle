@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { Grade } from "../components/ClassRoomCards";
-import ManageClassTable from "../components/ManageClassRoomTable";
+import { ManageClassRoomTable } from "@features/students";
 
 const ManageClassRoom: React.FC = () => {
   const { level } = useParams<{ level: string }>();
@@ -42,10 +42,7 @@ const ManageClassRoom: React.FC = () => {
         {/* Render the table only if an active class is selected */}
         {activeClassId && (
           <div className="mt-4">
-            <h2 className="text-lg font-bold text-center">
-              Details for Class ID: {activeClassId}
-            </h2>
-            <ManageClassTable />
+            <ManageClassRoomTable />
           </div>
         )}
       </section>

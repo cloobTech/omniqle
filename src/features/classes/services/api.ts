@@ -19,15 +19,11 @@ export const classApi = createApi({
   endpoints: (builder) => ({
     getGrades: builder.query({
       query: ({ schoolId }) => `schools/${schoolId}/grades`,
-      providesTags: (result, error, { schoolId }) => [
-        { type: "Grades", id: schoolId }, // Changed to use object destructuring
-      ],
+      providesTags: ({ schoolId }) => [{ type: "Grades", id: schoolId }],
     }),
     getSingleGrades: builder.query({
       query: ({ schoolId, gradeId }) => `schools/${schoolId}/grades/${gradeId}`,
-      providesTags: (result, error, { schoolId }) => [
-        { type: "Grades", id: schoolId },
-      ],
+      providesTags: ({ schoolId }) => [{ type: "Grades", id: schoolId }],
     }),
     // ... other endpoints
     createGrades: builder.mutation({
@@ -36,7 +32,7 @@ export const classApi = createApi({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: (result, error, { schoolId }) => {
+      invalidatesTags: ({ schoolId }) => {
         console.log("Invalidating tags for schoolId:", schoolId);
         return [
           { type: "Grades", id: schoolId }, // Make sure this matches exactly

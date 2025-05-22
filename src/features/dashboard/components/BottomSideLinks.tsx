@@ -23,9 +23,8 @@ const BottomSideLinks: React.FC<SideLinkProps> = ({
       {/* Links */}
       <NavLink
         onClick={() => setIsExpanded(false)}
-        to="/dashboard/"
+        to="/dashboard/settings"
         className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
-        end
       >
         <div className="flex items-center gap-2">
           <BsGear />
@@ -38,9 +37,8 @@ const BottomSideLinks: React.FC<SideLinkProps> = ({
       </NavLink>
       <NavLink
         onClick={() => setIsExpanded(false)}
-        to="/dashboard/"
+        to="/dashboard/supports"
         className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
-        end
       >
         <div className="flex items-center gap-2">
           <BsHeadset />

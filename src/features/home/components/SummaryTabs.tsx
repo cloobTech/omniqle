@@ -1,6 +1,8 @@
 import React from "react";
 import { Tabs } from "@mantine/core";
 import EmployeeSummary from "./EmployeeSummaryTable";
+import ClassSummary from "./ClassRoomsSummaryTable";
+import PaymentSummaryTable from "./PaymentSummaryTable";
 
 const QuestionTypeTabView: React.FC = () => {
   return (
@@ -9,7 +11,7 @@ const QuestionTypeTabView: React.FC = () => {
         <Tabs.List>
           <Tabs.Tab value="gallery">Employee</Tabs.Tab>
           <Tabs.Tab value="messages">Classes</Tabs.Tab>
-          <Tabs.Tab value="settings">Others Items</Tabs.Tab>
+          <Tabs.Tab value="settings">Payments</Tabs.Tab>
           <Tabs.Tab value="setting">Other Items</Tabs.Tab>
         </Tabs.List>
 
@@ -18,11 +20,11 @@ const QuestionTypeTabView: React.FC = () => {
         </Tabs.Panel>
 
         <Tabs.Panel value="messages">
-          <p>Classes</p>
+          <ClassSummary />
         </Tabs.Panel>
 
         <Tabs.Panel value="settings">
-          <p>Other Items</p>
+          <PaymentSummaryTable />
         </Tabs.Panel>
 
         <Tabs.Panel value="setting">

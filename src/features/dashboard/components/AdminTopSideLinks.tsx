@@ -52,9 +52,8 @@ const AdminTopSideLinks: React.FC<SideLinkProps> = ({
       </NavLink>
       <NavLink
         onClick={() => setIsExpanded(false)}
-        to="/dashboard/"
+        to="/dashboard/employees"
         className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
-        end
       >
         <div className="flex items-center gap-2">
           <BsBriefcase />
@@ -67,9 +66,8 @@ const AdminTopSideLinks: React.FC<SideLinkProps> = ({
       </NavLink>
       <NavLink
         onClick={() => setIsExpanded(false)}
-        to="/dashboard/"
+        to="/dashboard/payments"
         className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
-        end
       >
         <div className="flex items-center gap-2">
           <BsReceipt />
