@@ -14,7 +14,7 @@ const ManageClassRoomCards: React.FC = () => {
     setToken(storedToken);
   }, []);
 
-  const { data, isLoading } = useGetGradesQuery(
+  const { data, isLoading, isFetching } = useGetGradesQuery(
     {
       schoolId: "4",
     },
@@ -25,7 +25,7 @@ const ManageClassRoomCards: React.FC = () => {
 
   const { showModal } = useModal();
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <ClassRoomCardsSkeleton />;
   }
 

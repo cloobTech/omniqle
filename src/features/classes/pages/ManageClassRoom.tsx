@@ -6,7 +6,9 @@ import { ManageClassRoomTable } from "@features/students";
 const ManageClassRoom: React.FC = () => {
   const { level } = useParams<{ level: string }>();
   const location = useLocation();
-  const { grades } = location.state as { grades: Grade[] };
+  const { grades } = location?.state as { grades: Grade[] };
+
+
 
   // Automatically set the first item as the default active class
   const [activeClassId, setActiveClassId] = useState<number | null>(
@@ -14,9 +16,11 @@ const ManageClassRoom: React.FC = () => {
   );
 
   const handleClassClick = (id: number) => {
-    console.log(`Class with ID ${id} clicked`);
     setActiveClassId(id);
   };
+
+  // Find the active grade based on the activeClassId
+  const activeGrade = grades.find((grade) => grade.id === activeClassId);
 
   return (
     <div className="mt-4">
@@ -25,7 +29,7 @@ const ManageClassRoom: React.FC = () => {
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mt-4">
-        {grades.map((grade) => (
+        {grades?.map((grade) => (
           <div
             key={grade.id}
             onClick={() => handleClassClick(grade.id)}
@@ -42,7 +46,7 @@ const ManageClassRoom: React.FC = () => {
         {/* Render the table only if an active class is selected */}
         {activeClassId && (
           <div className="mt-4">
-            <ManageClassRoomTable />
+            {activeGrade && <ManageClassRoomTable grade={activeGrade} />}
           </div>
         )}
       </section>

@@ -4,88 +4,37 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { BsArrowDownUp } from "react-icons/bs";
 import { Pagination } from "@mantine/core";
 import { useModal } from "@src/index";
-import AddStudents from "../forms/AddStudents";
+import { AddStudentsTab } from "@features/students";
 import StudentDetails from "./StudentDetails";
+import { Grade } from "@features/classes/components/ClassRoomCards";
+import { useGetStudentsQuery } from "@features/students/services/api";
 
-interface Student {
-  id: number;
-  first_name: string;
-  last_name: string;
-  age: number;
-  gender: string;
-  class_name: string;
+// interface Student {
+//   id: number;
+//   first_name: string;
+//   last_name: string;
+//   age: number;
+//   gender: string;
+//   class_name: string;
+// }
+
+interface ManageClassRoomTableProps {
+  grade: Grade;
 }
 
-const ManageClassTable: React.FC = () => {
+const ManageClassTable: React.FC<ManageClassRoomTableProps> = ({ grade }) => {
+  const { data } = useGetStudentsQuery({
+    schoolId: 4,
+    grade_id: grade.id,
+  });
+
+  console.log({ data });
+  const students = data?.students || [];
+  // const pagination = data?.pagination || {};
+
   const { showModal } = useModal();
 
-  // Example student data
-  const students: Student[] = [
-    {
-      id: 1,
-      first_name: "John",
-      last_name: "Doe",
-      age: 15,
-      gender: "Male",
-      class_name: "JSS 1A",
-    },
-    {
-      id: 2,
-      first_name: "Jane",
-      last_name: "Smith",
-      age: 14,
-      gender: "Female",
-      class_name: "JSS 1A",
-    },
-    {
-      id: 3,
-      first_name: "Michael",
-      last_name: "Brown",
-      age: 16,
-      gender: "Male",
-      class_name: "JSS 1B",
-    },
-    {
-      id: 4,
-      first_name: "Emily",
-      last_name: "Davis",
-      age: 15,
-      gender: "Female",
-      class_name: "JSS 1B",
-    },
-    {
-      id: 5,
-      first_name: "John",
-      last_name: "Doe",
-      age: 15,
-      gender: "Male",
-      class_name: "JSS 1A",
-    },
-    {
-      id: 6,
-      first_name: "Jane",
-      last_name: "Smith",
-      age: 14,
-      gender: "Female",
-      class_name: "JSS 1A",
-    },
-    {
-      id: 7,
-      first_name: "Michael",
-      last_name: "Brown",
-      age: 16,
-      gender: "Male",
-      class_name: "JSS 1B",
-    },
-    {
-      id: 8,
-      first_name: "Emily",
-      last_name: "Davis",
-      age: 15,
-      gender: "Female",
-      class_name: "JSS 1B",
-    },
-  ];
+  console.log(data);
 
   // Sort icon for table headers
   const sortIcon = (title: string): React.ReactNode => {
@@ -112,7 +61,7 @@ const ManageClassTable: React.FC = () => {
   );
 
   // Map student data to table rows
-  const rows = students.map((student) => (
+  const rows = students.map((student: any) => (
     <Table.Tr
       key={student.id}
       onClick={() =>
@@ -124,8 +73,17 @@ const ManageClassTable: React.FC = () => {
     >
       <Table.Td className="p-3">{student.first_name}</Table.Td>
       <Table.Td className="p-3">{student.last_name}</Table.Td>
-      <Table.Td className="p-3">{student.age}</Table.Td>
-      <Table.Td className="p-3">{student.gender}</Table.Td>
+      <Table.Td className="p-3">17</Table.Td>
+      <Table.Td className="p-3">Male</Table.Td>
+      <Table.Td
+        className={`${
+          student.verification_status === "unverified"
+            ? "bg-yellow-100 text-yellow-700"
+            : "bg-green-100 text-green-800"
+        }`}
+      >
+        {student.verification_status}
+      </Table.Td>
       <Table.Td className="p-3">{action}</Table.Td>
     </Table.Tr>
   ));
@@ -136,9 +94,10 @@ const ManageClassTable: React.FC = () => {
         <h1 className="font-bold px-2 mb-2">Students in ...</h1>
         <Button
           onClick={() =>
-            showModal(<AddStudents />, {
+            showModal(<AddStudentsTab class_id={grade.id} />, {
               size: "100%",
               withCloseButton: false,
+              fullScreen: true,
             })
           }
         >
@@ -181,6 +140,13 @@ const ManageClassTable: React.FC = () => {
                 backgroundColor: "var(--primary-light)",
               }}
             >
+              {sortIcon("Status")}
+            </Table.Th>
+            <Table.Th
+              style={{
+                backgroundColor: "var(--primary-light)",
+              }}
+            >
               {sortIcon("Action")}
             </Table.Th>
           </Table.Tr>
@@ -194,7 +160,7 @@ const ManageClassTable: React.FC = () => {
             showing <span className="font-bold">1-{students.length}</span> of{" "}
             <span className="font-bold">{students.length}</span> entries
           </small>
-          <Pagination total={10} />
+          <Pagination total={1} />
         </div>
       </section>
     </div>

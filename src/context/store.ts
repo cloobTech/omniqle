@@ -3,6 +3,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { authApi } from "@features/auth";
 import { classApi } from "@features/classes";
+import { studentApi } from "@features/students";
 import { userApi } from "@features/users";
 import modalReducer from "@src/slice/modal";
 import { setupListeners } from "@reduxjs/toolkit/query";
@@ -10,13 +11,19 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: [authApi.reducerPath, classApi.reducerPath, userApi.reducerPath],
+  whitelist: [
+    authApi.reducerPath,
+    classApi.reducerPath,
+    userApi.reducerPath,
+    studentApi.reducerPath,
+  ],
 };
 
 const appReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
   [classApi.reducerPath]: classApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
+  [studentApi.reducerPath]: studentApi.reducer,
   modal: modalReducer,
 });
 
@@ -37,7 +44,12 @@ export const store = configureStore({
   middleware(getDefaultMiddleware) {
     return getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(authApi.middleware, classApi.middleware, userApi.middleware);
+    }).concat(
+      authApi.middleware,
+      classApi.middleware,
+      userApi.middleware,
+      studentApi.middleware
+    );
   },
 });
 
