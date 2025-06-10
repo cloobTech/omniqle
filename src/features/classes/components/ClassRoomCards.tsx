@@ -1,5 +1,5 @@
 import React from "react";
-import { BsBuilding } from "react-icons/bs";
+import { BsChevronRight } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import RenderListItem from "@features/shared/components/RenderListItems";
 
@@ -14,6 +14,11 @@ interface GradeLevel {
   grades: Grade[];
 }
 
+interface TopGradeLevel {
+  levels: [];
+  group_name: string;
+}
+
 const ClassRoomCard: React.FC<GradeLevel> = ({ level, grades }) => {
   const navigate = useNavigate();
   const handleNavigation = () => {
@@ -24,29 +29,64 @@ const ClassRoomCard: React.FC<GradeLevel> = ({ level, grades }) => {
 
   return (
     <div onClick={handleNavigation}>
-      <div className="flex flex-col justify-between h-32 bg-gray-100 rounded shadow p-4 cursor-pointer">
-        <div className="flex items-center justify-between gap-4">
-          <h3 className="font-bold text-gray-500">{level}</h3>
-
-          <div className="bg-white p-2 rounded">
-            <BsBuilding style={{ color: "var(--primary)" }} />
-          </div>
+      <div className="flex  justify-between h-22  items-center bg-[var(--primary-lightest)] rounded shadow p-3 cursor-pointer">
+        <div className="flex flex-col justify-between h-full">
+          <h3 className="text-gray-800">{level}</h3>
+          <div className="font-bold">{`${grades.length} classrooms`}</div>
         </div>
-        <div className="font-bold">{`${grades.length} classrooms`}</div>
+
+        <BsChevronRight />
       </div>
     </div>
   );
 };
 
-const ClassRoomCards: React.FC<{ data: GradeLevel[] }> = ({ data }) => {
+// Group Card - Elementary, Middle, High School
+const GroupCard: React.FC<TopGradeLevel> = ({ group_name, levels }) => {
   return (
-    <div className="bg-white p-2 rounded-lg grid md:grid-cols-2 lg:grid-cols-5 gap-4">
-      {data && (
+    <div className="mb-4">
+      <h3>{group_name}</h3>
+      <div
+        className={`grid md:grid-cols-3 lg:grid-cols-${levels.length} gap-4`}
+      >
         <RenderListItem
-          data={data}
+          data={levels}
           renderItem={({ level, grades }) => (
             <ClassRoomCard level={level} grades={grades} key={level} />
           )}
+        />
+      </div>
+    </div>
+  );
+};
+
+const ClassRoomCards: React.FC<{ data: TopGradeLevel[] }> = ({ data }) => {
+  const elementarySchool = data?.find(
+    (item) => item.group_name === "Elementary School"
+  );
+  const middleSchool = data?.find(
+    (item) => item.group_name === "Middle School"
+  );
+  const highSchool = data?.find((item) => item.group_name === "High School");
+
+  return (
+    <div className="bg-white p-2 rounded-lg">
+      {elementarySchool && (
+        <GroupCard
+          group_name={elementarySchool.group_name}
+          levels={elementarySchool.levels}
+        />
+      )}
+      {middleSchool && (
+        <GroupCard
+          group_name={middleSchool.group_name}
+          levels={middleSchool.levels}
+        />
+      )}
+      {highSchool && (
+        <GroupCard
+          group_name={highSchool.group_name}
+          levels={highSchool.levels}
         />
       )}
     </div>

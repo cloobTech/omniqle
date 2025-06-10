@@ -5,13 +5,17 @@ import { authApi } from "@features/auth";
 import { classApi } from "@features/classes";
 import { studentApi } from "@features/students";
 import { userApi } from "@features/users";
+import { verifyPersonApi } from "@features/verification";
 import modalReducer from "@src/slice/modal";
+import navbarReducer from "@src/slice/navbar";
+import schoolReducer from "@src/slice/school";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
 const persistConfig = {
   key: "root",
   storage,
   whitelist: [
+    "school",
     authApi.reducerPath,
     classApi.reducerPath,
     userApi.reducerPath,
@@ -24,7 +28,10 @@ const appReducer = combineReducers({
   [classApi.reducerPath]: classApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
   [studentApi.reducerPath]: studentApi.reducer,
+  [verifyPersonApi.reducerPath]: verifyPersonApi.reducer,
   modal: modalReducer,
+  navbar: navbarReducer,
+  school: schoolReducer,
 });
 
 const rootReducer = (
@@ -48,7 +55,8 @@ export const store = configureStore({
       authApi.middleware,
       classApi.middleware,
       userApi.middleware,
-      studentApi.middleware
+      studentApi.middleware,
+      verifyPersonApi.middleware
     );
   },
 });

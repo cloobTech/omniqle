@@ -6,6 +6,8 @@ import { notifications } from "@mantine/notifications";
 import StudentAddList from "../components/StudentAddList";
 import { Student } from "../components/StudentAddList";
 import { useCreateStudentMutation } from "../services/api";
+import AddStudentPopover from "../components/AddStudentPopOver";
+import {  BsCalendarDateFill } from "react-icons/bs";
 
 interface AddStudentsTabProps {
   class_id: number;
@@ -24,6 +26,8 @@ const AddStudentsQuickOption: React.FC<AddStudentsTabProps> = ({
   const [students, setStudents] = useState<Student[]>([]);
   // Mutation to create students
   const [createStudent, { isLoading }] = useCreateStudentMutation();
+
+  const calendarIcon = <BsCalendarDateFill className="text-black"/>;
 
   // Mantine form for student input
   const form = useForm({
@@ -167,13 +171,21 @@ const AddStudentsQuickOption: React.FC<AddStudentsTabProps> = ({
               label="Date of Birth"
               placeholder="Date of Birth"
               {...form.getInputProps("date_of_birth")}
+              rightSection={calendarIcon}
             />
-            <div className="flex flex-col gap-1 justify-end min-h-[56px]">
-              <Switch
-                checked={checked}
-                onChange={(event) => setChecked(event.currentTarget.checked)}
-                label="Make this student a platform user"
-              />
+            <div className="relative flex flex-col gap-1 justify-end min-h-[56px]">
+              <div className="inline-flex items-center gap-2 border">
+                <Switch
+                  checked={checked}
+                  onChange={(event) => setChecked(event.currentTarget.checked)}
+                  label="Make this student a platform user"
+                />
+                <AddStudentPopover
+                  className="border"
+                  withTitle={false}
+                  content="A platform user is a student who can log in to the platform and access their information. This is optional and recommended for students who are 13 years or older."
+                />
+              </div>
               {checked && (
                 <TextInput
                   withAsterisk

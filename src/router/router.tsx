@@ -7,6 +7,7 @@ import { Payments } from "@features/payments";
 import { Employees } from "@features/employees";
 import { Settings } from "@features/settings";
 import { Supports } from "@features/supprts";
+import { StudentProfile } from "@features/students";
 
 export const routers = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ export const routers = createBrowserRouter([
       {
         path: "supports",
         element: <Supports />,
+      },
+      {
+        path: "students/profile/:studentId",
+        element: <StudentProfile />,
       },
     ],
   },

@@ -1,3 +1,3 @@
 export { default as ManageClassRoomTable } from "./components/ManageClassRoomTable";
-export { default as AddStudentsTab } from "./components/AddStudentsTab";
+export { default as StudentProfile } from "./pages/StudentProfile";
 export * from "./services/api";

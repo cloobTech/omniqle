@@ -17,19 +17,16 @@ export const studentApi = createApi({
   baseQuery: baseQuery,
   tagTypes: ["Students"],
   endpoints: (builder) => ({
-    getStudents: builder.query<
-      { pagination: object; school_name: string; students: [] }, // Response type
-      { schoolId: number; grade_id: number } // Query parameters type
-    >({
+    getStudents: builder.query({
       query: ({ schoolId, grade_id }) =>
-        `schools/${schoolId}/students?grade_id=${grade_id}`, // API endpoint with query parameters
+        `schools/${schoolId}/grades/${grade_id}`,
       providesTags: (result) =>
-        result ? [{ type: "Students", id: result.school_name }] : [], // Tag for cache invalidation
+        result ? [{ type: "Students", id: result.school_name }] : [],
     }),
     getSingleStudent: builder.query({
       query: ({ schoolId, studentId }) =>
         `schools/${schoolId}/students/${studentId}`,
-      providesTags: ({ schoolId }) => [{ type: "Students", id: schoolId }],
+      // providesTags: ({ schoolId }) => [{ type: "Students", id: schoolId }],
     }),
     createStudent: builder.mutation({
       query: ({ schoolId, data }) => ({

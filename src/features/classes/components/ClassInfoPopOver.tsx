@@ -4,18 +4,21 @@ import { Popover, Text, Group, useMantineTheme } from "@mantine/core";
 export default function ClassInfo({
   title,
   content,
+  withTitle = true,
+  className = "",
 }: {
-  title: string;
+  title?: string;
   content: string;
+  withTitle?: boolean;
+  className?: string;
 }) {
   const theme = useMantineTheme();
   return (
-    <div>
+    <div className={className}>
       <Popover width={200} position="bottom" withArrow shadow="md">
         <Popover.Target>
           <Group
             gap="xs"
-            bg="primary.1"
             p={4}
             mb="xs"
             style={{
@@ -25,9 +28,11 @@ export default function ClassInfo({
             }}
           >
             <BsInfoCircle color={theme.colors.primary[5]} size={14} />
-            <Text c="gray.6" size="xs">
-              {title}
-            </Text>
+            {withTitle && (
+              <Text c="gray.6" size="xs">
+                {title}
+              </Text>
+            )}
           </Group>
         </Popover.Target>
         <Popover.Dropdown>

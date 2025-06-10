@@ -3,16 +3,14 @@ import { TextInput, Avatar } from "@mantine/core";
 import { BsSearch, BsBell, BsPersonCircle } from "react-icons/bs";
 import { useLocation } from "react-router-dom";
 import { useGetCurrentUserQuery } from "@features/users";
-import {
-  getPageTitle,
-  getPageSubtitle,
-} from "../utils/updateNavBar";
+import { getPageTitle, getPageSubtitle } from "../utils/updateNavBar";
+import { useAppSelector } from "@src/index";
 
 const Navbar: React.FC = () => {
   const location = useLocation();
   const icon = <BsSearch size={16} className="text-gray-500" />;
 
-  const schoolId = localStorage.getItem("schoolId") || ""; // Fallback to an empty string
+  const schoolId = useAppSelector((state) => state?.school?.schoolId);
 
   const { data } = useGetCurrentUserQuery(schoolId, {
     skip: !schoolId, // Skip query if schoolId is not available

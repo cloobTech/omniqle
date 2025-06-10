@@ -25,6 +25,9 @@ export const classApi = createApi({
       query: ({ schoolId, gradeId }) => `schools/${schoolId}/grades/${gradeId}`,
       providesTags: ({ schoolId }) => [{ type: "Grades", id: schoolId }],
     }),
+    getGradeDisplayNames: builder.query({
+      query: ({ schoolId }) => `schools/${schoolId}/level_display_names`,
+    }),
     // ... other endpoints
     createGrades: builder.mutation({
       query: ({ schoolId, data }) => ({
@@ -45,4 +48,5 @@ export const {
   useGetGradesQuery,
   useCreateGradesMutation,
   useGetSingleGradesQuery,
+  useGetGradeDisplayNamesQuery,
 } = classApi;

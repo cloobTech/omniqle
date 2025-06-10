@@ -13,7 +13,12 @@ const AddStudentsTab: React.FC<AddStudentsTabProps> = ({ class_id }) => {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-bold ">Add Students</h3>
+        <div>
+          <h3 className="text-lg font-bold">Add Students</h3>
+          <small className="text-gray-600">
+            Add new students to this classroom
+          </small>
+        </div>
         <CloseModal />
       </div>
       <div className="flex gap-4 ">
@@ -25,19 +30,19 @@ const AddStudentsTab: React.FC<AddStudentsTabProps> = ({ class_id }) => {
           title="What is Full Option?"
           content="Enter all the required information to add students"
         />
-        <AddStudentPopover
-          title="Who is platform user?"
-          content="A platform user is a student who can log in to the platform and access their information. This is optional and recommended for students who are 13 years or older."
-        />
       </div>
       <Tabs
         defaultValue="quickAdd"
         variant="pills"
         styles={{ tab: { fontSize: 12 } }}
       >
-        <Tabs.List className="bg-[var(--primary-light)] p-2 rounded-lg">
-          <Tabs.Tab value="quickAdd">Quick Add</Tabs.Tab>
-          <Tabs.Tab value="fullOption">Full Option</Tabs.Tab>
+        <Tabs.List>
+          <Tabs.Tab className="!font-bold shadow" value="quickAdd">
+            Quick Add
+          </Tabs.Tab>
+          <Tabs.Tab className="!font-bold shadow" value="fullOption">
+            Full Add Option
+          </Tabs.Tab>
         </Tabs.List>
 
         <Tabs.Panel value="quickAdd">

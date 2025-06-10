@@ -4,9 +4,12 @@ import { Button, TextInput, Checkbox } from "@mantine/core";
 import { useLoginMutation } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import googleIcon from "../assets/7123025_logo_google_g_icon.svg";
+import { useAppDispatch } from "@src/hooks/redux_hook";
+import { setSchoolId } from "@src/index";
 
 const LoginUser: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [login, { isLoading, error }] = useLoginMutation();
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
@@ -31,7 +34,7 @@ const LoginUser: React.FC = () => {
 
       if (response.token) {
         localStorage.setItem("token", response?.token);
-        localStorage.setItem("schoolId", response?.current_school?.id);
+        dispatch(setSchoolId(response?.current_school?.id));
         navigate("/dashboard");
       }
 

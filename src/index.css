@@ -25,9 +25,10 @@
     /* Your original variables */
     --primary: #008080;
     --primary-light: #e5f1f1;
+    --primary-lightest: #f5ffff;
 
     /* Extended palette */
-    --primary-0: #f5fbfb; /* lightest */
+    --primary-0: #f5ffff; /* lightest */
     --primary-1: var(--primary-light, #e5f1f1);
     --primary-2: #c6e3e3;
     --primary-3: #96d0d0;
@@ -67,6 +68,9 @@
 
   .card-gradient {
     background-image: linear-gradient(#ebffff, #ebffff, #ffffd6);
+  }
+  .card-gradient-two {
+    background-image: linear-gradient(#ebffff, #f5ffff, #ffffd6, #ffffd6);
   }
 }
 
