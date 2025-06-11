@@ -9,10 +9,9 @@ const VerifyStudent = ({
   personId: string;
 }) => {
   return (
-    <div className="w-[600px]">
+    <div>
       <div className="flex justify-between items-center mb-4">
         <div className="flex flex-col">
-          <p>{fullName}</p>
           <p className="font-semibold">Verify student</p>
           <small className="text-gray-600">
             verify this student's indentity

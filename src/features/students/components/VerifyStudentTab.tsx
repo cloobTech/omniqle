@@ -28,7 +28,7 @@ const VerifyStudentTab = ({
           <VerifyStudentWithNIN fullName={fullName} personId={personId} />
         </Tabs.Panel>
         <Tabs.Panel value="faceRecognition">
-          <VerifyStudentWithFacialReg />
+          <VerifyStudentWithFacialReg personId={personId} fullName={fullName} />
         </Tabs.Panel>
       </Tabs>
     </div>

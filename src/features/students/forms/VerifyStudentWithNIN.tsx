@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { TextInput, Button, NumberInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useVerifyPersonMutation } from "@features/verification";
@@ -16,7 +16,7 @@ const VerifyStudentWithNin = ({
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const schoolId = useAppSelector((state) => state?.school?.schoolId);
   const { hideModal } = useModal();
-  const [verifyPerson, { isLoading, isError }] = useVerifyPersonMutation();
+  const [verifyPerson, { isLoading }] = useVerifyPersonMutation();
   const form = useForm({
     initialValues: {
       method: "nin",
@@ -56,7 +56,7 @@ const VerifyStudentWithNin = ({
   const validForm = form.isValid();
 
   return (
-    <form className="grid gap-4" onSubmit={form.onSubmit(handleSubmit)}>
+    <form className="grid gap-4 w-[540px]" onSubmit={form.onSubmit(handleSubmit)}>
       <div className="grid gap-2">
         <TextInput
           styles={{

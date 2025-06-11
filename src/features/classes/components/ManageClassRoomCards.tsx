@@ -11,20 +11,11 @@ import { ClassRoomCardsSkeleton } from "./Skeletons";
 import { useAppSelector } from "@src/index";
 
 const ManageClassRoomCards: React.FC = () => {
-  const [token, setToken] = React.useState<string | null>(null);
   const schoolId = useAppSelector((state) => state?.school?.schoolId);
 
-  React.useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    setToken(storedToken);
-  }, []);
-
-  const { data, isLoading, isFetching } = useGetGradesQuery(
-    {
-      schoolId: schoolId,
-    },
-    { skip: !token }
-  );
+  const { data, isLoading } = useGetGradesQuery({
+    schoolId: schoolId,
+  });
 
   const { data: classLevels, isError } = useGetGradeDisplayNamesQuery({
     schoolId: schoolId,
@@ -32,7 +23,7 @@ const ManageClassRoomCards: React.FC = () => {
 
   const { showModal } = useModal();
 
-  if (isLoading || isFetching) {
+  if (isLoading) {
     return <ClassRoomCardsSkeleton />;
   }
 
