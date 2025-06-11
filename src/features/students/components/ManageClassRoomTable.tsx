@@ -15,6 +15,8 @@ import { useGetStudentsQuery } from "@features/students/services/api";
 import { IPagination } from "@src/index";
 import { useNavigate } from "react-router-dom";
 import AddStudentsTab from "./AddStudentsTab";
+import { EditClassroom } from "@features/classes";
+import { extractDetailsToUpdateClassroom } from "../utils/extractDetailsToUpdateClassroom";
 
 interface Student {
   id: number;
@@ -31,17 +33,36 @@ interface Student {
 
 interface ManageClassRoomTableProps {
   grade: Grade;
+  classLevelName: string;
 }
 
-const ManageClassTable: React.FC<ManageClassRoomTableProps> = ({ grade }) => {
+const ManageClassTable: React.FC<ManageClassRoomTableProps> = ({
+  grade,
+  classLevelName,
+}) => {
   const navigate = useNavigate();
   const { data } = useGetStudentsQuery({
     schoolId: 4,
     grade_id: grade.id,
   });
   const students = data?.students || [];
-
   const { showModal } = useModal();
+
+  const handleEditClassroom = () => {
+    // Extract the details needed for the EditClassroom component
+
+    const extractedDetails = extractDetailsToUpdateClassroom({
+      data,
+      classLevelName,
+    });
+
+    // Open the modal with the EditClassroom component and pass the extracted details
+    // @ts-ignore
+    showModal(<EditClassroom {...extractedDetails} />, {
+      size: "auto",
+      withCloseButton: false,
+    });
+  };
 
   const pagination: IPagination =
     data?.pagination ??
@@ -70,16 +91,15 @@ const ManageClassTable: React.FC<ManageClassRoomTableProps> = ({ grade }) => {
           <Button
             variant="outline"
             leftSection={<HiPencilSquare />}
-            className="!border"
+            onClick={handleEditClassroom}
           >
             Edit Class
           </Button>
           <Button
             onClick={() =>
               showModal(<AddStudentsTab class_id={grade.id} />, {
-                size: "100%",
                 withCloseButton: false,
-                fullScreen: true,
+                size: "auto",
               })
             }
           >

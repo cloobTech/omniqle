@@ -6,7 +6,7 @@ import { BsCheckCircle } from "react-icons/bs";
 import { Button } from "@mantine/core";
 import StudentDetailCards from "./StudentDetailCards";
 import { useModal } from "@src/index";
-import VerifyStudent from "./VerifyStudent";
+import VerifyStudent from "../../verification/components/VerifyUser";
 import { useGetSingleStudentQuery } from "../services/api";
 import { useAppSelector } from "@src/index";
 import { useParams } from "react-router-dom";

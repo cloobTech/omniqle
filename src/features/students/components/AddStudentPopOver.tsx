@@ -1,39 +1,33 @@
 import { BsInfoCircle } from "react-icons/bs";
-import { Popover, Text, Group, useMantineTheme } from "@mantine/core";
+import { Popover, Text } from "@mantine/core";
 
 export default function AddStudentPopover({
   title,
   content,
   withTitle = true,
   className = "",
+  iconColor = "black",
+  position = "bottom",
 }: {
   title?: string;
   content: string;
   withTitle?: boolean;
   className?: string;
+  iconColor?: string;
+  position?: "top" | "bottom" | "left" | "right";
 }) {
-  const theme = useMantineTheme();
   return (
-    <div className={className}>
-      <Popover width={200} position="bottom" withArrow shadow="md">
+    <div className={`inline-flex items-center ${className}`}>
+      <Popover width={200} position={position} withArrow shadow="md">
         <Popover.Target>
-          <Group
-            gap="xs"
-            p={4}
-            mb="xs"
-            style={{
-              display: "inline-flex",
-              borderRadius: theme.radius.sm,
-              fontSize: theme.fontSizes.xs,
-            }}
-          >
-            <BsInfoCircle color={theme.colors.primary[5]} size={14} />
+          <div className="inline-flex items-center gap-1">
+            <BsInfoCircle color={iconColor} size={14} /> {/* Use iconColor */}
             {withTitle && (
               <Text c="gray.6" size="xs">
                 {title}
               </Text>
             )}
-          </Group>
+          </div>
         </Popover.Target>
         <Popover.Dropdown>
           <Text size="xs">{content}</Text>

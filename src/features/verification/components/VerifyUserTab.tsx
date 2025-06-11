@@ -1,7 +1,7 @@
 import { Tabs } from "@mantine/core";
-import VerifyStudentWithFacialReg from "../forms/VerifyStudentWithFacialReg";
-import VerifyStudentWithNIN from "../forms/VerifyStudentWithNIN";
-const VerifyStudentTab = ({
+import VerifyStudentWithFacialReg from "../forms/VerifyUserWithFacialReg";
+import VerifyUserWithNin from "../forms/VerifyUserWithNIN";
+const VerifyUserTab = ({
   fullName,
   personId,
 }: {
@@ -25,7 +25,7 @@ const VerifyStudentTab = ({
         </Tabs.List>
 
         <Tabs.Panel value="nin">
-          <VerifyStudentWithNIN fullName={fullName} personId={personId} />
+          <VerifyUserWithNin fullName={fullName} personId={personId} />
         </Tabs.Panel>
         <Tabs.Panel value="faceRecognition">
           <VerifyStudentWithFacialReg personId={personId} fullName={fullName} />
@@ -35,4 +35,4 @@ const VerifyStudentTab = ({
   );
 };
 
-export default VerifyStudentTab;
+export default VerifyUserTab;

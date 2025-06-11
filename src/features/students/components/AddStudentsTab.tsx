@@ -10,38 +10,46 @@ interface AddStudentsTabProps {
 }
 
 const AddStudentsTab: React.FC<AddStudentsTabProps> = ({ class_id }) => {
+  const [activeTab, setActiveTab] = React.useState("quickAdd"); // Track the active tab
+
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <div>
-          <h3 className="text-lg font-bold">Add Students</h3>
-          <small className="text-gray-600">
+        <div className="flex flex-col">
+          <h3 className="text-lg font-bold text-sm">Add Students</h3>
+          <small className="text-gray-600 text-xs">
             Add new students to this classroom
           </small>
         </div>
         <CloseModal />
       </div>
-      <div className="flex gap-4 ">
-        <AddStudentPopover
-          title="What is Quick Add?"
-          content="Quickly add Students with minimal infomation and update later"
-        />
-        <AddStudentPopover
-          title="What is Full Option?"
-          content="Enter all the required information to add students"
-        />
-      </div>
+
       <Tabs
-        defaultValue="quickAdd"
+        value={activeTab}
+        onChange={(value) => value !== null && setActiveTab(value)} // Update the active tab state
         variant="pills"
         styles={{ tab: { fontSize: 12 } }}
       >
         <Tabs.List>
-          <Tabs.Tab className="!font-bold shadow" value="quickAdd">
-            Quick Add
+          <Tabs.Tab value="quickAdd">
+            <div className="flex items-center gap-2">
+              Quick Add
+              <AddStudentPopover
+                iconColor={activeTab === "quickAdd" ? "white" : "black"} // Change icon color
+                position="top"
+                content="Quickly add Students with minimal information and update later"
+              />
+            </div>
           </Tabs.Tab>
-          <Tabs.Tab className="!font-bold shadow" value="fullOption">
-            Full Add Option
+          <Tabs.Tab value="fullOption">
+            <div className="flex items-center gap-2">
+              Full Add Option
+              <AddStudentPopover
+                iconColor={activeTab === "fullOption" ? "white" : "black"} // Change icon color
+                position="top"
+                content="Enter all the required information to add students"
+              />
+            </div>
           </Tabs.Tab>
         </Tabs.List>
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextInput, Button, Switch, Select, Group, Box } from "@mantine/core";
+import { TextInput, Button, Switch, Select, Box } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
@@ -7,7 +7,7 @@ import StudentAddList from "../components/StudentAddList";
 import { Student } from "../components/StudentAddList";
 import { useCreateStudentMutation } from "../services/api";
 import AddStudentPopover from "../components/AddStudentPopOver";
-import {  BsCalendarDateFill } from "react-icons/bs";
+import { BsCalendarDateFill } from "react-icons/bs";
 
 interface AddStudentsTabProps {
   class_id: number;
@@ -27,7 +27,7 @@ const AddStudentsQuickOption: React.FC<AddStudentsTabProps> = ({
   // Mutation to create students
   const [createStudent, { isLoading }] = useCreateStudentMutation();
 
-  const calendarIcon = <BsCalendarDateFill className="text-black"/>;
+  const calendarIcon = <BsCalendarDateFill className="text-black" />;
 
   // Mantine form for student input
   const form = useForm({
@@ -125,7 +125,9 @@ const AddStudentsQuickOption: React.FC<AddStudentsTabProps> = ({
   };
 
   return (
-    <Box className={`py-4 flex ${students.length > 0 && "gap-8"}`}>
+    <Box
+      className={`py-4 flex ${students.length > 0 && "gap-8"} min-w-[420px]`}
+    >
       <StudentAddList
         students={students}
         handleRemoveStudent={handleRemoveStudent}
@@ -135,19 +137,16 @@ const AddStudentsQuickOption: React.FC<AddStudentsTabProps> = ({
         <form onSubmit={form.onSubmit(handleAddStudent)}>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
             <TextInput
-              withAsterisk
               label="First Name"
               placeholder="Enter first name"
               {...form.getInputProps("first_name")}
             />
             <TextInput
-              withAsterisk
               label="Last Name"
               placeholder="Enter last name"
               {...form.getInputProps("last_name")}
             />
             <TextInput
-              withAsterisk
               label="School ID"
               placeholder="School ID / Student ID / Admission Number"
               {...form.getInputProps("school_identifier")}
@@ -155,7 +154,6 @@ const AddStudentsQuickOption: React.FC<AddStudentsTabProps> = ({
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 items-center">
             <Select
-              withAsterisk
               data={[
                 { value: "male", label: "Male" },
                 { value: "female", label: "Female" },
@@ -166,7 +164,6 @@ const AddStudentsQuickOption: React.FC<AddStudentsTabProps> = ({
             />
 
             <DateInput
-              withAsterisk
               valueFormat="YYYY MMM DD"
               label="Date of Birth"
               placeholder="Date of Birth"
@@ -174,18 +171,23 @@ const AddStudentsQuickOption: React.FC<AddStudentsTabProps> = ({
               rightSection={calendarIcon}
             />
             <div className="relative flex flex-col gap-1 justify-end min-h-[56px]">
-              <div className="inline-flex items-center gap-2 border">
+              <div className="inline-flex items-center gap-2">
                 <Switch
+                  styles={{
+                    label: {
+                      fontSize: "0.75rem",
+                    },
+                  }}
                   checked={checked}
                   onChange={(event) => setChecked(event.currentTarget.checked)}
                   label="Make this student a platform user"
                 />
                 <AddStudentPopover
-                  className="border"
                   withTitle={false}
                   content="A platform user is a student who can log in to the platform and access their information. This is optional and recommended for students who are 13 years or older."
                 />
               </div>
+
               {checked && (
                 <TextInput
                   withAsterisk
@@ -195,7 +197,7 @@ const AddStudentsQuickOption: React.FC<AddStudentsTabProps> = ({
               )}
             </div>
           </div>
-          <Group>
+          <div className="flex justify-end gap-4 mt-8">
             <Button variant="light" type="submit">
               Add Student
             </Button>
@@ -205,7 +207,7 @@ const AddStudentsQuickOption: React.FC<AddStudentsTabProps> = ({
             >
               {isLoading ? "Saving..." : "Save to Database"}
             </Button>
-          </Group>
+          </div>
         </form>
       </Box>
     </Box>

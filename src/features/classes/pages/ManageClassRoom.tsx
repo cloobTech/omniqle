@@ -81,7 +81,12 @@ const ManageClassRoom: React.FC = () => {
         {/* Render the table only if an active class is selected */}
         {activeClassId && (
           <div className="mt-4">
-            {activeGrade && <ManageClassRoomTable grade={activeGrade} />}
+            {activeGrade && (
+              <ManageClassRoomTable
+                grade={activeGrade}
+                classLevelName={level || "Unknown Level"}
+              />
+            )}
           </div>
         )}
       </section>

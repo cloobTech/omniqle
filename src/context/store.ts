@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { persistStore, persistReducer } from "redux-persist";
+import { persistStore, persistReducer, REGISTER, FLUSH, PAUSE, PERSIST, PURGE, REHYDRATE } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { authApi } from "@features/auth";
 import { classApi } from "@features/classes";
@@ -14,15 +14,16 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: [
-    "school",
+  version: 1,
+  whitelist: ["school"],
+  blacklist: [
     authApi.reducerPath,
     classApi.reducerPath,
     userApi.reducerPath,
     studentApi.reducerPath,
+    verifyPersonApi.reducerPath,
   ],
 };
-
 const appReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
   [classApi.reducerPath]: classApi.reducer,
@@ -39,6 +40,8 @@ const rootReducer = (
   action: any
 ) => {
   if (action.type === "auth/logout") {
+    // Clear all persisted state
+    storage.removeItem("persist:root");
     state = undefined;
   }
   return appReducer(state, action);
@@ -48,17 +51,18 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware(getDefaultMiddleware) {
-    return getDefaultMiddleware({
-      serializableCheck: false,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
     }).concat(
       authApi.middleware,
       classApi.middleware,
       userApi.middleware,
       studentApi.middleware,
       verifyPersonApi.middleware
-    );
-  },
+    ),
 });
 
 export const persistor = persistStore(store);

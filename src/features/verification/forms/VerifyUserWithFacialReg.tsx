@@ -1,5 +1,5 @@
 import { TextInput } from "@mantine/core";
-import { FaceCapture } from "@features/verification";
+import FaceCapture from "../components/FaceCapture";
 
 const VerifyStudentWithFacialReg = ({
   fullName,

@@ -61,7 +61,7 @@ const FaceCapture = ({ personId }: { personId: string }) => {
 
       notifications.show({
         title: "Success",
-        message: "Student successfully verified!",
+        message: "User successfully verified!",
         color: "green",
         position: "top-right",
       });

@@ -6,7 +6,7 @@ import { notifications } from "@mantine/notifications";
 import { useModal } from "@src/index";
 import { useAppSelector } from "@src/index";
 
-const VerifyStudentWithNin = ({
+const VerifyUserWithNin = ({
   fullName,
   personId,
 }: {
@@ -39,7 +39,7 @@ const VerifyStudentWithNin = ({
 
       notifications.show({
         title: "Success",
-        message: "Student successfully verified!",
+        message: "User successfully verified!",
         color: "green",
         position: "top-right",
       });
@@ -56,7 +56,10 @@ const VerifyStudentWithNin = ({
   const validForm = form.isValid();
 
   return (
-    <form className="grid gap-4 w-[540px]" onSubmit={form.onSubmit(handleSubmit)}>
+    <form
+      className="grid gap-4 w-[540px]"
+      onSubmit={form.onSubmit(handleSubmit)}
+    >
       <div className="grid gap-2">
         <TextInput
           styles={{
@@ -80,7 +83,7 @@ const VerifyStudentWithNin = ({
       </div>
       <div className="flex justify-end">
         <Button type="submit" disabled={!validForm || isLoading}>
-          {isLoading ? "Verifying Student..." : "Verify Student"}
+          {isLoading ? "Verifying User..." : "Verify User"}
         </Button>
       </div>
       {errorMessage && <small className="text-red-500">{errorMessage}</small>}
@@ -88,4 +91,4 @@ const VerifyStudentWithNin = ({
   );
 };
 
-export default VerifyStudentWithNin;
+export default VerifyUserWithNin;
