@@ -41,7 +41,6 @@ const LoginUser: React.FC = () => {
       form.reset();
     } catch (err: any) {
       if (err?.data) {
-        console.error("Error details:", err.data);
       }
     }
   };

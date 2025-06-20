@@ -79,7 +79,7 @@ const FaceCapture = ({ personId }: { personId: string }) => {
     <div className="flex flex-col max-w-md mx-auto bg-white rounded-lg">
       <small>Capture image</small>
       {!capturedImage ? (
-        <div className="flex flex-col space-y-4 relative">
+        <div className="flex flex-col space-y-4">
           <Webcam
             audio={false}
             ref={webcamRef}
@@ -91,12 +91,7 @@ const FaceCapture = ({ personId }: { personId: string }) => {
             }}
             className="rounded-lg border-2 border-gray-200"
           />
-          <button
-            onClick={capture}
-            className=" absolute bottom-6 right-2 cursor-pointer px-4 py-1 bg-[var(--primary)] text-white rounded-md hover:bg-[var(--primary)]/90"
-          >
-            Capture Face
-          </button>
+          <Button onClick={capture}>Capture Face</Button>
         </div>
       ) : (
         <div className="flex flex-col items-center space-y-4">

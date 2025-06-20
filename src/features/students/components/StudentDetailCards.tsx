@@ -1,6 +1,6 @@
 import React from "react";
-import { Avatar } from "@mantine/core";
 import { IStudentDetails } from "../types";
+import { FaUser } from "react-icons/fa";
 
 interface IStudentPersonalInfo {
   firstName: string;
@@ -13,23 +13,29 @@ interface IStudentPersonalInfo {
 const StudentAvatarAndName = ({
   fullName,
   gradeName,
+  photo,
 }: {
   fullName: string;
   gradeName: string;
+  photo: string | null;
 }) => {
   return (
-    <div className="h-full p-2 bg-white rounded">
-      <div className="flex items-center gap-2 card-gradient p-4 rounded">
-        <Avatar src={null} alt="Class Teacher Image" size={52} />
-        <div className="flex flex-col">
-          <p className="font-semibold">{fullName}</p>
-          <small className="text-xs text-gray-600">{gradeName}</small>
-        </div>
+    <div className="flex gap-2">
+      <div className="size-42 bg-gray-300 flex items-center justify-center">
+        {photo ? (
+          <img src={photo} alt="" className="bg-white size-40" />
+        ) : (
+          <FaUser className="text-5xl" />
+        )}
+      </div>
+
+      <div className="flex flex-col">
+        <p className="font-semibold">{fullName}</p>
+        <small className="text-xs text-gray-600">{gradeName}</small>
       </div>
     </div>
   );
 };
-
 const StudentDetaiCard: React.FC<IStudentPersonalInfo> = (
   data: IStudentPersonalInfo
 ) => {
@@ -47,9 +53,7 @@ const StudentDetaiCard: React.FC<IStudentPersonalInfo> = (
           </li>
           <li className="flex justify-between items-center">
             <p className="text-xs text-gray-500">Middle name</p>
-            <p className="text-xs font-[600]">
-              {data?.middleName ?? "---"}
-            </p>
+            <p className="text-xs font-[600]">{data?.middleName ?? "---"}</p>
           </li>
           <li className="flex justify-between items-center">
             <p className="text-xs text-gray-500">Last name</p>
@@ -72,7 +76,7 @@ const StudentDetaiCard: React.FC<IStudentPersonalInfo> = (
 const StudentDetailCards: React.FC<IStudentDetails> = (
   data: IStudentDetails
 ) => {
-  const { full_name, grade_name } = data;
+  const { full_name, grade_name, photo } = data;
   const { first_name, last_name, middle_name, gender, date_of_birth } =
     data.person_details;
   const studentDetails = {
@@ -85,7 +89,11 @@ const StudentDetailCards: React.FC<IStudentDetails> = (
 
   return (
     <div className="flex flex-col gap-4">
-      <StudentAvatarAndName fullName={full_name} gradeName={grade_name} />
+      <StudentAvatarAndName
+        fullName={full_name}
+        gradeName={grade_name}
+        photo={photo}
+      />
       <StudentDetaiCard {...studentDetails} />
     </div>
   );

@@ -27,8 +27,6 @@ const StudentDetails: React.FC = () => {
     studentId: parsedStudentId,
   });
 
-  console.log(studenDetails);
-
   useEffect(() => {
     hideNav();
 
@@ -68,7 +66,7 @@ const StudentDetails: React.FC = () => {
               )
             }
           >
-            Verify students
+            Verify student
           </Button>
         )}
       </div>

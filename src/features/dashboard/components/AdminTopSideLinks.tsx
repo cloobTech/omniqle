@@ -26,6 +26,7 @@ const AdminTopSideLinks: React.FC<SideLinkProps> = ({
         to="/dashboard"
         className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
         end
+        title="dashboard"
       >
         <div className="flex items-center gap-2">
           <BsHouse />
@@ -40,6 +41,7 @@ const AdminTopSideLinks: React.FC<SideLinkProps> = ({
         onClick={() => setIsExpanded(false)}
         to="/dashboard/classrooms"
         className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
+        title="classrooms"
       >
         <div className="flex items-center gap-2">
           <BsBuilding />
@@ -54,6 +56,7 @@ const AdminTopSideLinks: React.FC<SideLinkProps> = ({
         onClick={() => setIsExpanded(false)}
         to="/dashboard/employees"
         className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
+        title="employees"
       >
         <div className="flex items-center gap-2">
           <BsBriefcase />
@@ -68,6 +71,7 @@ const AdminTopSideLinks: React.FC<SideLinkProps> = ({
         onClick={() => setIsExpanded(false)}
         to="/dashboard/payments"
         className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
+        title="payments"
       >
         <div className="flex items-center gap-2">
           <BsReceipt />

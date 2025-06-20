@@ -13,7 +13,9 @@ const ClassTeacherInformation = ({
       <div className="flex items-center gap-2 ">
         <Avatar src={null} alt="Class Teacher Image" size={52} />
         <div className="flex flex-col">
-          <p className="font-semibold">{classTeacher ?? "Not available"}</p>
+          <p className="font-semibold text-sm">
+            {classTeacher ?? "Not available"}
+          </p>
           <small className="text-xs text-gray-600">Class Teacher</small>
         </div>
       </div>
@@ -27,7 +29,6 @@ const ClassTeacherInformation = ({
           height: "1.5rem",
           borderColor: "#cccccc",
         }}
-        onClick={() => console.log("Edit Class Teacher")}
       >
         View Class Teacher
       </Button>
@@ -43,11 +44,15 @@ const ClassRepsInformation = ({
   return (
     <div className="h-full p-4 bg-[var(--primary-lightest)] rounded shadow flex flex-col gap-4">
       <div className="flex flex-col">
-        <p className="font-semibold">{classCaptain ?? "Not available"}</p>
+        <p className="font-semibold text-sm">
+          {classCaptain ?? "Not available"}
+        </p>
         <small className="text-xs text-gray-600">Class Captain/Rep</small>
       </div>
       <div className="flex flex-col">
-        <p className="font-semibold">{classCaptain ?? "Not available"}</p>
+        <p className="font-semibold text-sm">
+          {classCaptain ?? "Not available"}
+        </p>
         <small className="text-xs text-gray-600">
           Assistant Class Captain/Rep
         </small>
@@ -74,7 +79,7 @@ const ClassStudentsInformation = ({
           <BsGenderMale />
           Male Students
         </p>
-        <p className="font-bold text-lg flex items-center gap-1">
+        <p className="font-bold text-sm flex items-center gap-1">
           <span className="text-xs text-gray-400">{`(${malePercent}%)`}</span>
           {maleCount}
         </p>
@@ -84,7 +89,7 @@ const ClassStudentsInformation = ({
           <BsGenderFemale />
           Female Students
         </p>
-        <p className="font-bold text-lg flex items-center gap-1">
+        <p className="font-bold text-sm flex items-center gap-1">
           <span className="text-xs text-gray-400">{`(${femalePercent}%)`}</span>
           {femaleCount}
         </p>
@@ -105,7 +110,7 @@ const ClassStudentsInformation = ({
             size="xs"
           />
         </div>
-        <p className="font-bold text-lg">88%</p>
+        <p className="font-bold text-sm">88%</p>
       </div>
     </div>
   );

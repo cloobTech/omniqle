@@ -1,6 +1,6 @@
 import React from "react";
-import CloseModal from "@src/components/CloseModal";
 import { Button, Select, TextInput } from "@mantine/core";
+import ModalHeader from "@src/components/ModalHeader";
 
 interface IUpdateClassromm {
   className: string;
@@ -15,15 +15,10 @@ const EditClassroom: React.FC<IUpdateClassromm> = (
 ) => {
   return (
     <div className="w-[520px]">
-      <div className="flex items-center justify-between">
-        <div className="flex flex-col">
-          <p className="font-semibold text-sm">Edit Class</p>
-          <small className="text-xs text-gray-500">
-            update the details of this classroom
-          </small>
-        </div>
-        <CloseModal />
-      </div>
+      <ModalHeader
+        title="Edit Class"
+        subTitle="update the details of this classroom"
+      />
       <form className="mt-6 grid gap-4">
         <div className="grid grid-cols-2 gap-4">
           <TextInput disabled label="Class" value={details.classLevelName} />

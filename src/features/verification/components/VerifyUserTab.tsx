@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Tabs } from "@mantine/core";
 import VerifyStudentWithFacialReg from "../forms/VerifyUserWithFacialReg";
 import VerifyUserWithNin from "../forms/VerifyUserWithNIN";
+
 const VerifyUserTab = ({
   fullName,
   personId,
@@ -8,9 +10,12 @@ const VerifyUserTab = ({
   fullName: string;
   personId: string;
 }) => {
+  const [activeTab, setActiveTab] = useState<string | null>("nin");
   return (
     <div className="">
       <Tabs
+        value={activeTab}
+        onChange={setActiveTab}
         defaultValue="nin"
         variant="pills"
         styles={{ tab: { fontSize: 12 } }}
@@ -28,7 +33,12 @@ const VerifyUserTab = ({
           <VerifyUserWithNin fullName={fullName} personId={personId} />
         </Tabs.Panel>
         <Tabs.Panel value="faceRecognition">
-          <VerifyStudentWithFacialReg personId={personId} fullName={fullName} />
+          {activeTab === "faceRecognition" && (
+            <VerifyStudentWithFacialReg
+              personId={personId}
+              fullName={fullName}
+            />
+          )}
         </Tabs.Panel>
       </Tabs>
     </div>

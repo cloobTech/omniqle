@@ -8,6 +8,7 @@ export interface IStudentDetails {
   grade_name: string;
   school_identifier: string;
   verification_status: string;
+  photo: string | null;
   created_at: string; // ISO date string
   membership_details: {
     id: number;

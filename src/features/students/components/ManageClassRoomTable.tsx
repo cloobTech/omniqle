@@ -58,10 +58,7 @@ const ManageClassTable: React.FC<ManageClassRoomTableProps> = ({
 
     // Open the modal with the EditClassroom component and pass the extracted details
     // @ts-ignore
-    showModal(<EditClassroom {...extractedDetails} />, {
-      size: "auto",
-      withCloseButton: false,
-    });
+    showModal(<EditClassroom {...extractedDetails} />, {});
   };
 
   const pagination: IPagination =

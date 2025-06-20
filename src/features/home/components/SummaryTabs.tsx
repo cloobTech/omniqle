@@ -6,7 +6,7 @@ import PaymentSummaryTable from "./PaymentSummaryTable";
 
 const QuestionTypeTabView: React.FC = () => {
   return (
-    <div className="py-8">
+    <div className="py-6">
       <Tabs defaultValue="gallery" color="darkgreen">
         <Tabs.List>
           <Tabs.Tab value="gallery">Employee</Tabs.Tab>

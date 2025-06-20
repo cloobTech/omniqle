@@ -36,7 +36,6 @@ export const classApi = createApi({
         body: data,
       }),
       invalidatesTags: ({ schoolId }) => {
-        console.log("Invalidating tags for schoolId:", schoolId);
         return [
           { type: "Grades", id: schoolId }, // Make sure this matches exactly
         ];

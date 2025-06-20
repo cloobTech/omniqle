@@ -1,11 +1,21 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { persistStore, persistReducer, REGISTER, FLUSH, PAUSE, PERSIST, PURGE, REHYDRATE } from "redux-persist";
+import {
+  persistStore,
+  persistReducer,
+  REGISTER,
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REHYDRATE,
+} from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { authApi } from "@features/auth";
 import { classApi } from "@features/classes";
 import { studentApi } from "@features/students";
 import { userApi } from "@features/users";
 import { verifyPersonApi } from "@features/verification";
+import { paymentApi, bankReducer, invoiceReducer } from "@features/payments";
 import modalReducer from "@src/slice/modal";
 import navbarReducer from "@src/slice/navbar";
 import schoolReducer from "@src/slice/school";
@@ -15,13 +25,14 @@ const persistConfig = {
   key: "root",
   storage,
   version: 1,
-  whitelist: ["school"],
+  whitelist: ["school", "invoices", "banks"],
   blacklist: [
     authApi.reducerPath,
     classApi.reducerPath,
     userApi.reducerPath,
     studentApi.reducerPath,
     verifyPersonApi.reducerPath,
+    paymentApi.reducerPath,
   ],
 };
 const appReducer = combineReducers({
@@ -30,9 +41,12 @@ const appReducer = combineReducers({
   [userApi.reducerPath]: userApi.reducer,
   [studentApi.reducerPath]: studentApi.reducer,
   [verifyPersonApi.reducerPath]: verifyPersonApi.reducer,
+  [paymentApi.reducerPath]: paymentApi.reducer,
   modal: modalReducer,
   navbar: navbarReducer,
   school: schoolReducer,
+  banks: bankReducer,
+  invoice: invoiceReducer,
 });
 
 const rootReducer = (
@@ -61,7 +75,8 @@ export const store = configureStore({
       classApi.middleware,
       userApi.middleware,
       studentApi.middleware,
-      verifyPersonApi.middleware
+      verifyPersonApi.middleware,
+      paymentApi.middleware
     ),
 });
 

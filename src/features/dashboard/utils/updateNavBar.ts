@@ -23,6 +23,8 @@ export const getPageTitle = (pathname: string, userName: string): string => {
       return "Manage Classroom";
     case "/dashboard/employees":
       return "Employee Management";
+    case "/dashboard/payments":
+      return "Payments";
     default:
       return "Welcome";
   }
@@ -36,6 +38,8 @@ export const getPageSubtitle = (pathname: string): string => {
       return "Manage and organize classrooms effectively";
     case "/dashboard/employees":
       return "Manage employee records and details";
+    case "/dashboard/payments":
+      return "Manage all your bills and payments";
     default:
       return "The administrative management portal";
   }

@@ -91,12 +91,10 @@ const AddStudentsQuickOption: React.FC<AddStudentsTabProps> = ({
       class_id,
     };
     try {
-      const response = await createStudent({
+      await createStudent({
         schoolId: 4,
         data,
       }).unwrap();
-
-      console.log("Response from API:", response);
 
       notifications.show({
         position: "top-right",

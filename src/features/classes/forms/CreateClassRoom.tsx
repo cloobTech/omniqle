@@ -5,8 +5,8 @@ import { notifications } from "@mantine/notifications";
 import { useForm, UseFormReturnType } from "@mantine/form";
 import { useModal } from "@src/index";
 import { useCreateGradesMutation } from "../services/api";
-import { CloseModal } from "@src/index";
 import { useAppSelector } from "@src/index";
+import ModalHeader from "@src/components/ModalHeader";
 
 interface FormValues {
   forms: {
@@ -158,15 +158,10 @@ const CreateClassRoom: React.FC<CreateClassRoomProps> = ({
 
   return (
     <section className="flex flex-col max-h-[80vh]">
-      <div className="flex items-center justify-between mb-4 px-4">
-        <div>
-          <h1 className="text-lg font-bold">Create Classrooms</h1>
-          <p className="text-sm text-gray-500">
-            create new classrooms for your school.
-          </p>
-        </div>
-        <CloseModal />
-      </div>
+      <ModalHeader
+        title="Create Classrooms"
+        subTitle="create new classrooms for your school."
+      />
       <form
         onSubmit={form.onSubmit(handleSubmit)}
         className="flex flex-col flex-1"

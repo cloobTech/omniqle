@@ -6,7 +6,7 @@ interface GlobalModalProps {
   size?: string;
 }
 
-const GlobalModal: React.FC<GlobalModalProps> = ({ size = "80%" }) => {
+const GlobalModal: React.FC<GlobalModalProps> = ({ size = "auto" }) => {
   const { hideModal, state } = useModal();
 
   return (
@@ -14,6 +14,7 @@ const GlobalModal: React.FC<GlobalModalProps> = ({ size = "80%" }) => {
       opened={state.isOpen}
       onClose={() => hideModal()}
       size={size}
+      withCloseButton={false}
       {...state.modalProps}
     >
       {React.isValidElement(state.content) ? (

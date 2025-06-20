@@ -17,7 +17,8 @@ export const userApi = createApi({
   baseQuery: baseQuery,
   endpoints: (builder) => ({
     getCurrentUser: builder.query({
-      query: (schoolId) => `schools/${schoolId}/users/me`,
+      query: ({ schoolId }: { schoolId: number }) =>
+        `schools/${schoolId}/users/me`,
     }),
   }),
 });
