@@ -12,9 +12,9 @@ const Navbar: React.FC = () => {
 
   const schoolId = useAppSelector((state) => state?.school?.schoolId);
 
-  const { data } = useGetCurrentUserQuery(schoolId, {
-    skip: !schoolId, // Skip query if schoolId is not available
-  });
+  const { data } = schoolId
+    ? useGetCurrentUserQuery({ schoolId })
+    : { data: null };
 
   const current_school = data?.current_school || { name: "Unknown School" }; // Fallback for current_school
   const user = data?.user || { name: "Guest" }; // Fallback for user
