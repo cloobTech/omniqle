@@ -3,61 +3,44 @@ import { Button } from "@mantine/core";
 import { useModal } from "@src/index";
 import InvoiceStepper from "./InvoiceStepper";
 import { Table } from "@mantine/core";
-import { FaEdit, FaTrash } from "react-icons/fa";
-// import { useGetInvoicesQuery } from "../services/api";
 
 const InvoiceTable: React.FC = () => {
   const { showModal } = useModal();
-  // const { data: invoices } = useGetInvoicesQuery();
 
   const classrooms = [
     {
       id: 4,
-      name: "Primar 1",
-      total_students: 60,
+      name: "Primar 1 School Fees",
+      total_students: "2025/2026",
       completed_payments: 22,
-      owing_students: 3,
-      expected_income: 250000,
+      owing_students: "1st Term",
+      expected_income: "25th September 2025", // Example date
     },
     {
       id: 1,
-      name: "JSS 1",
-      total_students: 50,
+      name: "Primar 1 School Fees",
+      total_students: "2025/2026",
       completed_payments: 25,
-      owing_students: 5,
-      expected_income: 300000, // Example in currency
+      owing_students: "1st Term",
+      expected_income: "25th September 2025", // Example date // Example in currency
     },
     {
       id: 2,
-      name: "JSS 2",
-      total_students: 58,
+      name: "JSS 2 School Fees",
+      total_students: "2025/2026",
       completed_payments: 20,
-      owing_students: 8,
-      expected_income: 280000,
+      owing_students: "1st Term",
+      expected_income: "25th September 2025", // Example date
     },
     {
       id: 3,
       name: "JSS 3",
-      total_students: 32,
+      total_students: "2025/2026",
       completed_payments: 30,
-      owing_students: 2,
-      expected_income: 320000,
+      owing_students: "1st Term",
+      expected_income: "25th September 2025", // Example date
     },
   ];
-
-  // Action buttons for each row
-  const action = (
-    <div className="flex gap-4 text-gray-600">
-      <div className="flex gap-1 items-center">
-        <FaEdit />
-        <small>Edit</small>
-      </div>
-      <div className="flex gap-1 items-center">
-        <FaTrash />
-        <small>Delete</small>
-      </div>
-    </div>
-  );
 
   // Map classroom data to table rows
   const rows = classrooms.map((classroom) => (
@@ -66,8 +49,7 @@ const InvoiceTable: React.FC = () => {
       <Table.Td className="p-3">{classroom.total_students}</Table.Td>
       <Table.Td className="p-3">{classroom.completed_payments}</Table.Td>
       <Table.Td className="p-3">{classroom.owing_students}</Table.Td>
-      <Table.Td className="p-3">{`₦${classroom.expected_income.toLocaleString()}`}</Table.Td>
-      <Table.Td className="p-3">{action}</Table.Td>
+      <Table.Td className="p-3">{classroom.expected_income}</Table.Td>
     </Table.Tr>
   ));
 
@@ -83,17 +65,32 @@ const InvoiceTable: React.FC = () => {
       </div>
 
       <section>
-        <Table stickyHeader stickyHeaderOffset={60} highlightOnHover>
-          <Table.Thead>
-            <Table.Tr className="!bg-blue-500">
-              <Table.Th className="!bg-primary-light">Classroom</Table.Th>
-              <Table.Th className="!bg-primary-light">Total Students</Table.Th>
-              <Table.Th className="!bg-primary-light">
-                Completed Payments
-              </Table.Th>
-              <Table.Th className="!bg-primary-light">Owing Students</Table.Th>
-              <Table.Th className="!bg-primary-light">Expected Income</Table.Th>
-              <Table.Th className="!bg-primary-light">Action</Table.Th>
+        <Table
+          stickyHeader
+          stickyHeaderOffset={60}
+          highlightOnHover
+          styles={{
+            thead: {
+              backgroundColor: "#f3f4f6", // This is the gray color (similar to bg-gray-200)
+            },
+            th: {
+              backgroundColor: "#f3f4f6", // Ensure the th cells also have the same background
+            },
+          }}
+        >
+          <Table.Thead
+            style={{
+              fontSize: "12px",
+              fontWeight: 200,
+              color: "#4b5563", // Tailwind gray-600
+            }}
+          >
+            <Table.Tr>
+              <Table.Th>Title</Table.Th>
+              <Table.Th>Academic Year</Table.Th>
+              <Table.Th>Class</Table.Th>
+              <Table.Th>Term</Table.Th>
+              <Table.Th>Due Date</Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>{rows}</Table.Tbody>

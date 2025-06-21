@@ -1,6 +1,6 @@
 import { useAppSelector, useAppDispatch } from "@src/index";
 import InvoicePreviewHeader from "./InvoicePreviewHeader";
-import { TextInput, Button } from "@mantine/core";
+import { TextInput, Button, Loader } from "@mantine/core";
 import type { LineItem } from "../types/index";
 
 import {
@@ -121,7 +121,8 @@ const InvoicePreview = ({
   prevStep: () => void;
 }) => {
   const dispatch = useAppDispatch();
-  const [createInvoice] = useCreateInvoiceMutation();
+  const [createInvoice, { isLoading: publishingInvoice }] =
+    useCreateInvoiceMutation();
   const schoolId = useAppSelector((state) => state?.school?.schoolId);
   const { data: currentUser } = schoolId
     ? useGetCurrentUserQuery({ schoolId })
@@ -155,6 +156,7 @@ const InvoicePreview = ({
     if (!payload.discipline) {
       delete payload.discipline;
     }
+    delete payload.isSplittedAccount;
 
     // ✅ Remove all `id` fields
     payload = removeIdFields(payload);
@@ -164,7 +166,7 @@ const InvoicePreview = ({
         // @ts-ignore-next-line
         payload,
         schoolId: schoolId ?? 0,
-        levelId: invoice.level_id ?? 0, // Provide a default value (e.g., 0) if undefined
+        levelId: invoice.level_id ?? 0,
       }).unwrap();
 
       dispatch(resetForm());
@@ -193,7 +195,10 @@ const InvoicePreview = ({
         <Button color="gray" onClick={prevStep}>
           Edit
         </Button>
-        <Button onClick={publishInvoice}>Publish Invoice</Button>
+        <Button disabled={publishingInvoice} onClick={publishInvoice}>
+          {publishingInvoice && <Loader size="xs" className="mr-2" />}
+          {publishingInvoice ? "Publishing..." : "Publish Invoice"}
+        </Button>
       </div>
     </div>
   );

@@ -22,6 +22,7 @@ export type CreateInvoiceState = {
   term: string;
   level_id: number;
   line_items: Record<string, LineItem[]>;
+  isSplittedAccount: boolean;
 };
 
 const initialState: Partial<CreateInvoiceState> = {
