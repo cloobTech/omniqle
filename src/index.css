@@ -26,7 +26,7 @@
     --primary: #008080;
     --primary-light: #e5f1f1;
     --primary-lightest: #f5ffff;
-    --primary-lightest-2: #EBFFFF;
+    --primary-lightest-2: #ebffff;
 
     /* Extended palette */
     --primary-0: #f5ffff; /* lightest */
@@ -39,6 +39,8 @@
     --primary-7: #005a5a;
     --primary-8: #004747;
     --primary-9: #003434;
+
+    --muted-card: hsl(0, 0%, 99%);
   }
 
   .btn {

@@ -4,7 +4,7 @@ import InvoiceTable from "./InvoiceTable";
 
 const PaymentTabs: React.FC = () => {
   return (
-    <div className="py-4  flex-1">
+    <div className="py-4  flex-1 ">
       <Tabs
         defaultValue="invoice"
         variant="pills"

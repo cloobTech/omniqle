@@ -130,7 +130,7 @@ const CreateInvoice: React.FC<ICreateInvoice> = ({ nextStep }) => {
       {selectedClassOption && parseInt(selectedClassOption, 10) > 9 && (
         <Select
           searchable
-          placeholder="select class level invioce is meant for"
+          placeholder="select discipline"
           label="Discipline"
           data={["Act", "Science", "Commercial"]}
           {...form.getInputProps("discipline")}

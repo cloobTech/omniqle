@@ -213,7 +213,7 @@ const SplittedAccountInvoice = ({ nextStep }: { nextStep: () => void }) => {
   return (
     <div className="space-y-6">
       {bankGroups.map((group, groupIndex) => (
-        <div key={groupIndex} className="p-4 rounded shadow">
+        <div key={groupIndex} className="p-4 rounded bg-[var(--muted-card)] border border-gray-300">
           <div className="flex items-center justify-between mb-2">
             <Text>Bank Group {groupIndex + 1}</Text>
             {bankGroups.length > 1 && (
