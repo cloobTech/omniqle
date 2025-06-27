@@ -2,11 +2,15 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { BsPower, BsHeadset, BsGear } from "react-icons/bs";
 import { SideLinkProps } from "../types";
+import { useModal } from "@src/index";
+import LogoutUser from "@features/auth/forms/LogoutUser";
 
 const BottomSideLinks: React.FC<SideLinkProps> = ({
   isExpanded,
   setIsExpanded,
 }) => {
+  const { showModal } = useModal();
+
   // Classes for active and inactive links
   const activeClass =
     "flex items-center gap-2 p-2 text-white bg-primary rounded transition-all duration-300 text-brand-blue text-sm";
@@ -49,11 +53,10 @@ const BottomSideLinks: React.FC<SideLinkProps> = ({
           </span>
         </div>
       </NavLink>
-      <NavLink
-        onClick={() => setIsExpanded(false)}
-        to="/dashboard/"
-        className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
-        end
+      <div
+        onClick={() => showModal(<LogoutUser />, {})}
+        className={`${inactiveClass} cursor-pointer`}
+        role="button"
       >
         <div className="flex items-center gap-2">
           <BsPower />
@@ -63,7 +66,7 @@ const BottomSideLinks: React.FC<SideLinkProps> = ({
             Logout
           </span>
         </div>
-      </NavLink>
+      </div>
     </div>
   );
 };

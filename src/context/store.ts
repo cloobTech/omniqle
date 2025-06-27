@@ -19,13 +19,14 @@ import { paymentApi, bankReducer, invoiceReducer } from "@features/payments";
 import modalReducer from "@src/slice/modal";
 import navbarReducer from "@src/slice/navbar";
 import schoolReducer from "@src/slice/school";
+import { authReducer } from "@features/auth";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
 const persistConfig = {
   key: "root",
   storage,
   version: 1,
-  whitelist: ["school", "invoices", "banks"],
+  whitelist: ["school", "invoices", "banks", "authentication"],
   blacklist: [
     authApi.reducerPath,
     classApi.reducerPath,
@@ -47,13 +48,14 @@ const appReducer = combineReducers({
   school: schoolReducer,
   banks: bankReducer,
   invoice: invoiceReducer,
+  authentication: authReducer,
 });
 
 const rootReducer = (
   state: ReturnType<typeof appReducer> | undefined,
   action: any
 ) => {
-  if (action.type === "auth/logout") {
+  if (action.type === "authentication/logout") {
     // Clear all persisted state
     storage.removeItem("persist:root");
     state = undefined;

@@ -24,7 +24,10 @@ interface BankLineGroup {
   lineItems: LineItemData[];
 }
 
-type LineItemRef = React.RefObject<{ getValues: () => any } | null>;
+type LineItemRef = React.RefObject<{
+  getValues: () => any;
+  validate: () => { hasErrors: boolean };
+} | null>;
 
 const SplittedAccountInvoice = ({ nextStep }: { nextStep: () => void }) => {
   const dispatch = useAppDispatch();
@@ -64,7 +67,10 @@ const SplittedAccountInvoice = ({ nextStep }: { nextStep: () => void }) => {
 
     for (const items of Object.values(invoice.line_items || {})) {
       const groupRefs = (items as any[]).map(() =>
-        React.createRef<{ getValues: () => any }>()
+        React.createRef<{
+          getValues: () => any;
+          validate: () => { hasErrors: boolean };
+        }>()
       );
       refs.push(groupRefs);
     }
@@ -112,7 +118,12 @@ const SplittedAccountInvoice = ({ nextStep }: { nextStep: () => void }) => {
 
     const updatedRefs = [...lineItemRefs];
     if (!updatedRefs[groupIndex]) updatedRefs[groupIndex] = [];
-    updatedRefs[groupIndex].push(React.createRef<{ getValues: () => any }>());
+    updatedRefs[groupIndex].push(
+      React.createRef<{
+        getValues: () => any;
+        validate: () => { hasErrors: boolean };
+      }>()
+    );
     setLineItemRefs(updatedRefs);
   };
 
@@ -162,17 +173,26 @@ const SplittedAccountInvoice = ({ nextStep }: { nextStep: () => void }) => {
     );
   };
 
-  const handlePreviwew = () => {
+  const handlePreview = async () => {
+    let allValid = true;
     const lineItemsByBank: Record<string, any[]> = {};
 
-    bankGroups.forEach((group, groupIndex) => {
+    for (let groupIndex = 0; groupIndex < bankGroups.length; groupIndex++) {
+      const group = bankGroups[groupIndex];
       const bankId = group.bankId;
-      if (!bankId) return; // skip if no bank selected
+      if (!bankId) continue;
 
-      group.lineItems.forEach((_, lineIndex) => {
+      for (let lineIndex = 0; lineIndex < group.lineItems.length; lineIndex++) {
         const ref = lineItemRefs[groupIndex]?.[lineIndex];
+        const validationResult = ref?.current?.validate?.();
+
+        if (!validationResult || validationResult.hasErrors) {
+          allValid = false;
+          break;
+        }
+
         const values = ref?.current?.getValues();
-        if (!values) return;
+        if (!values) continue;
 
         const breakdown = values.subLineItems?.reduce(
           (
@@ -199,12 +219,22 @@ const SplittedAccountInvoice = ({ nextStep }: { nextStep: () => void }) => {
         }
 
         lineItemsByBank[bankId].push(itemData);
-      });
-    });
+      }
+    }
+
+    if (!allValid) {
+      // optionally toast or alert
+      console.warn(
+        "Validation failed. Please correct errors before continuing."
+      );
+      return;
+    }
 
     const payload = {
+      total_fees: totalAmount,
       line_items: lineItemsByBank,
     };
+
     console.log("Previewing invoice with data:", payload);
     dispatch(updateField(payload));
     nextStep();
@@ -213,7 +243,10 @@ const SplittedAccountInvoice = ({ nextStep }: { nextStep: () => void }) => {
   return (
     <div className="space-y-6">
       {bankGroups.map((group, groupIndex) => (
-        <div key={groupIndex} className="p-4 rounded bg-[var(--muted-card)] border border-gray-300">
+        <div
+          key={groupIndex}
+          className="p-4 rounded bg-[var(--muted-card)] border border-gray-300"
+        >
           <div className="flex items-center justify-between mb-2">
             <Text>Bank Group {groupIndex + 1}</Text>
             {bankGroups.length > 1 && (
@@ -293,7 +326,7 @@ const SplittedAccountInvoice = ({ nextStep }: { nextStep: () => void }) => {
             <Button disabled={totalAmount < 1} color="gray">
               Save as draft
             </Button>
-            <Button disabled={totalAmount < 1} onClick={handlePreviwew}>
+            <Button disabled={totalAmount < 1} onClick={handlePreview}>
               Preview invoice
             </Button>
           </div>

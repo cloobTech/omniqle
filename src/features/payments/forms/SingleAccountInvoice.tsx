@@ -10,6 +10,7 @@ import { updateField } from "../services/invoiceSlice";
 // Interface for ref exposed by LineItem
 interface LineItemRef {
   getValues: () => any;
+  validate: () => { hasErrors: boolean };
 }
 
 interface LineItemData {
@@ -77,11 +78,63 @@ const SingleAccountInvoice = ({ nextStep }: { nextStep: () => void }) => {
     value: account.paystack_subaccount,
   }));
 
-  const handleLineItems = () => {
-    const lineItemsData = lineItems.flatMap((item) => {
-      const values = item.ref.current?.getValues();
+  // const handleLineItems = () => {
+  //   const lineItemsData = lineItems.flatMap((item) => {
 
-      if (!values) return []; // return empty array instead of null
+  //     const values = item.ref.current?.getValues();
+
+  //     if (!values) return []; // return empty array instead of null
+
+  //     const breakdown = values.subLineItems.reduce(
+  //       (
+  //         acc: Record<string, number>,
+  //         subItem: { description: string; value: number }
+  //       ) => {
+  //         if (subItem.description && subItem.value) {
+  //           acc[subItem.description] = subItem.value;
+  //         }
+  //         return acc;
+  //       },
+  //       {} as Record<string, number>
+  //     );
+
+  //     return [
+  //       {
+  //         id: values.id,
+  //         item: values.item,
+  //         total_item_fee: values.total_item_fee,
+  //         required: values.required,
+  //         line_item_breakdown: breakdown,
+  //       },
+  //     ];
+  //   });
+
+  //   const payload = {
+  //     total_fees: totalAmount,
+  //     line_items: {
+  //       [selectedAccount!]: lineItemsData,
+  //     },
+  //   };
+
+  //   dispatch(updateField(payload));
+  //   nextStep();
+  // };
+
+  const handleLineItems = async () => {
+    let allValid = true;
+    const lineItemsData = [];
+
+    for (const item of lineItems) {
+      const result = item.ref.current?.validate?.();
+
+      if (!result || result.hasErrors) {
+        // ✅ proper check
+        allValid = false;
+        break;
+      }
+
+      const values = item.ref.current?.getValues();
+      if (!values) continue;
 
       const breakdown = values.subLineItems.reduce(
         (
@@ -96,18 +149,19 @@ const SingleAccountInvoice = ({ nextStep }: { nextStep: () => void }) => {
         {} as Record<string, number>
       );
 
-      return [
-        {
-          id: values.id,
-          item: values.item,
-          total_item_fee: values.total_item_fee,
-          required: values.required,
-          line_item_breakdown: breakdown,
-        },
-      ];
-    });
+      lineItemsData.push({
+        id: values.id,
+        item: values.item,
+        total_item_fee: values.total_item_fee,
+        required: values.required,
+        line_item_breakdown: breakdown,
+      });
+    }
+
+    if (!allValid) return; // ✅ form will block submission and display errors
 
     const payload = {
+      total_fees: totalAmount,
       line_items: {
         [selectedAccount!]: lineItemsData,
       },

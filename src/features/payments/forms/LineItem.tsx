@@ -40,19 +40,43 @@ const LineItem = React.forwardRef(
 
     useImperativeHandle(ref, () => ({
       getValues: () => form.values,
+      validate: () => {
+        const { hasErrors } = form.validate();
+
+        // ✅ Validate each subLineItem manually
+        let subItemHasErrors = false;
+        form.values.subLineItems.forEach((sub, index) => {
+          if (!sub.description) {
+            form.setFieldError(
+              `subLineItems.${index}.description`,
+              "Description is required"
+            );
+            subItemHasErrors = true;
+          }
+          if (!sub.value || sub.value <= 0) {
+            form.setFieldError(
+              `subLineItems.${index}.value`,
+              "Value must be > 0"
+            );
+            subItemHasErrors = true;
+          }
+        });
+
+        return { hasErrors: hasErrors || subItemHasErrors };
+      },
     }));
 
     const handleAddSubLineItem = () => {
-      const totalSubLineItems = form.values.subLineItems.reduce(
+      const totalSub = form.values.subLineItems.reduce(
         (sum, item) => sum + item.value,
         0
       );
+      const remaining = form.values.total_item_fee - totalSub;
 
-      if (totalSubLineItems < form.values.total_item_fee) {
-        const remainingAmount = form.values.total_item_fee - totalSubLineItems;
+      if (remaining > 0) {
         form.insertListItem("subLineItems", {
           description: "",
-          value: remainingAmount,
+          value: remaining,
         });
       }
     };
@@ -61,49 +85,38 @@ const LineItem = React.forwardRef(
       index: number,
       field: keyof SubLineItem,
       value: any,
-      triggerAdd: boolean = false
+      triggerAdd = false
     ) => {
       form.setFieldValue(`subLineItems.${index}.${field}`, value);
 
       if (triggerAdd) {
-        const totalSubLineItems = form.values.subLineItems.reduce(
+        const totalSub = form.values.subLineItems.reduce(
           (sum, item) => sum + item.value,
           0
         );
-
-        if (totalSubLineItems < form.values.total_item_fee) {
-          const remainingAmount =
-            form.values.total_item_fee - totalSubLineItems;
+        if (totalSub < form.values.total_item_fee) {
+          const remaining = form.values.total_item_fee - totalSub;
           form.insertListItem("subLineItems", {
             description: "",
-            value: remainingAmount,
+            value: remaining,
           });
         }
       }
     };
 
     const handleRemoveSubLineItem = (index: number) => {
-      // Make a copy and remove the item first
-      const updatedSubLineItems = [...form.values.subLineItems];
-      updatedSubLineItems.splice(index, 1);
+      const updatedSubItems = [...form.values.subLineItems];
+      updatedSubItems.splice(index, 1);
 
-      // Recalculate total
-      const totalSubLineItems = updatedSubLineItems.reduce(
-        (sum, item) => sum + item.value,
-        0
-      );
-
+      const newTotal = updatedSubItems.reduce((s, i) => s + i.value, 0);
       form.removeListItem("subLineItems", index);
 
-      // Adjust the last item's value to make total equal to line item total_item_fee
-      if (updatedSubLineItems.length > 0) {
-        const lastIndex = updatedSubLineItems.length - 1;
-        const remainingAmount = form.values.total_item_fee - totalSubLineItems;
-
-        // Update the form field value after deletion
+      if (updatedSubItems.length > 0) {
+        const lastIndex = updatedSubItems.length - 1;
+        const remaining = form.values.total_item_fee - newTotal;
         form.setFieldValue(
           `subLineItems.${lastIndex}.value`,
-          updatedSubLineItems[lastIndex].value + remainingAmount
+          updatedSubItems[lastIndex].value + remaining
         );
       }
     };
@@ -119,6 +132,7 @@ const LineItem = React.forwardRef(
             <TextInput
               className="flex-1"
               placeholder="Major line item description"
+              {...form.getInputProps("item")}
               leftSection={
                 (form.values.item || form.values.total_item_fee > 0) && (
                   <BsPlusCircle
@@ -128,18 +142,15 @@ const LineItem = React.forwardRef(
                   />
                 )
               }
-              // Plus sign as left section
               rightSection={
                 onRemove && (
                   <BsTrash3
                     onClick={onRemove}
                     className="cursor-pointer text-red-500"
                     size={14}
-                    title="Remove line item"
                   />
                 )
               }
-              {...form.getInputProps("item")}
             />
             <span className="h-[2px] w-[30px] bg-gray-200"></span>
             <TextInput
@@ -151,37 +162,34 @@ const LineItem = React.forwardRef(
                   ? formatNumber(form.values.total_item_fee)
                   : ""
               }
+              error={form.errors.total_item_fee}
               onChange={(event) => {
                 const raw = event.target.value.replace(/,/g, "");
                 const parsed = parseFloat(raw) || 0;
                 form.setFieldValue("total_item_fee", parsed);
                 onAmountChange?.(parsed);
               }}
-              disabled={!form.values.item} // Disable if item is empty
+              disabled={!form.values.item}
             />
           </div>
         </div>
 
-        {/* Sub Line Items */}
-        <div className="pl-12 grid gap-2 mt-1">
+        <div className="pl-12 grid gap-2 mt-2">
           {form.values.subLineItems.map((item, index) => (
-            <div key={index} className="flex  items-center">
+            <div key={index} className="flex items-center gap-2">
               <TextInput
                 className="flex-1"
                 placeholder="Subline description"
+                value={item.description}
+                error={form.errors[`subLineItems.${index}.description`]}
+                onChange={(e) =>
+                  handleSubLineItemChange(index, "description", e.target.value)
+                }
                 leftSection={
                   <BsDashCircle
-                    onClick={() => handleRemoveSubLineItem(index)} // Minus sign to remove subline item
+                    onClick={() => handleRemoveSubLineItem(index)}
                     size={12}
                   />
-                } // Minus sign as left section
-                value={item.description}
-                onChange={(event) =>
-                  handleSubLineItemChange(
-                    index,
-                    "description",
-                    event.target.value
-                  )
                 }
               />
               <span className="h-[2px] w-[30px] bg-gray-200"></span>
@@ -189,19 +197,20 @@ const LineItem = React.forwardRef(
                 className="w-[120px]"
                 type="text"
                 value={formatNumber(item.value)}
-                onChange={(event) =>
+                error={form.errors[`subLineItems.${index}.value`]}
+                onChange={(e) =>
                   handleSubLineItemChange(
                     index,
                     "value",
-                    parseNumber(event.target.value)
+                    parseNumber(e.target.value)
                   )
                 }
                 onBlur={() =>
                   handleSubLineItemChange(index, "value", item.value, true)
                 }
-                onKeyDown={(event) => {
-                  if (event.key === "Enter") {
-                    event.preventDefault();
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
                     handleSubLineItemChange(index, "value", item.value, true);
                   }
                 }}

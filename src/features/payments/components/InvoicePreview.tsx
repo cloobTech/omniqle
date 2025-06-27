@@ -148,8 +148,6 @@ const InvoicePreview = ({
       transaction_fee_bearer: "school" as "school" | "parent",
       accept_installments: "yes" as "yes" | "no",
       minimum_acceptable_payment: 50000,
-      due_date: invoice.due_date ?? "",
-      description: invoice.description ?? "",
     };
 
     // ✅ Remove discipline if it's an empty string

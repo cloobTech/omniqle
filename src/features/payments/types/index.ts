@@ -32,16 +32,9 @@ export interface RegisteredBankAccount {
   updatedAt: string;
 }
 
-export type LineItem = {
-  id: string;
-  item: string;
-  required: boolean;
-  total_item_fee: number;
-  line_item_breakdown: Record<string, number>;
-};
-
 export type CreateInvoiceState = {
   discipline?: string;
+  total_fees: number;
   accept_installments: "yes" | "no";
   minimum_acceptable_payment: number;
   role: string;
@@ -53,4 +46,26 @@ export type CreateInvoiceState = {
   term: string;
   level_id: number;
   line_items: Record<string, LineItem[]>;
+  isSplittedAccount: boolean;
 };
+
+export type LineItem = {
+  id: string;
+  item: string;
+  required: boolean;
+  total_item_fee: number;
+  line_item_breakdown: Record<string, number>;
+};
+
+
+export type InvoiceFromBackend = CreateInvoiceState & {
+  _id: string;
+  __v: number;
+};
+
+
+export interface IFilterProps {
+  discipline?: string;
+  academic_session?: string;
+  term?: string;
+}

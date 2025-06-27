@@ -10,7 +10,7 @@ import {
   generateAcademicSessions,
   schoolTerms,
 } from "../utils/parseAcademicSession";
-import type { CreateInvoiceState } from "../services/invoiceSlice";
+import type { CreateInvoiceState } from "../types/index";
 
 interface ICreateInvoice {
   nextStep: () => void;

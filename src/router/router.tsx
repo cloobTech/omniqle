@@ -8,6 +8,7 @@ import { Employees } from "@features/employees";
 import { Settings } from "@features/settings";
 import { Supports } from "@features/supprts";
 import { StudentProfile } from "@features/students";
+import RequireAuth from "@src/components/ProtectRoute";
 
 export const routers = createBrowserRouter([
   {
@@ -16,7 +17,11 @@ export const routers = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashbordLayout />,
+    element: (
+      <RequireAuth>
+        <DashbordLayout />
+      </RequireAuth>
+    ),
     children: [
       { path: "", element: <DashboardHome /> },
       { path: "classrooms", element: <ManageAllClassrooms /> },

@@ -7,6 +7,7 @@ import { useModal } from "@src/index";
 import { useGetSchoolBankAccountsQuery } from "../services/api";
 import { useAppSelector } from "@src/index";
 import { bankLogoMap } from "../data/bankLogos";
+import { BsBank2 } from "react-icons/bs";
 
 import RegisterSchoolBankAccount from "../forms/RegisterSchoolBankAccount";
 
@@ -54,7 +55,11 @@ const StatCards: React.FC = () => {
         };
       }
       return {
-        label: `${index === 0 ? "Main Account" : `${index + 1}nd Account`}`,
+        label: `${
+          index === 0
+            ? "Main Account"
+            : `${index + 1}${index + 1 === 2 ? "nd" : "rd"} Account`
+        }`,
         value: "-",
       };
     });
@@ -69,10 +74,14 @@ const StatCards: React.FC = () => {
         <ul className="text-sm grid gap-1">
           {accountList.map((account, index) => (
             <li key={index} className="flex items-center justify-between">
-              <p className="text-xs">{account.label}</p>
+              <p className={`text-[10px] font-semibold uppercase `}>
+                {account.label}
+              </p>
               <div className="flex items-center gap-2">
-                {account.logo && (
-                  <img src={account.logo} alt="logo" className="size-5" />
+                {account.logo ? (
+                  <img src={account.logo} alt="logo" className="size-4" />
+                ) : (
+                  account.value != "-" && <BsBank2 className="size-4" />
                 )}
                 <p>{account.value}</p>
               </div>

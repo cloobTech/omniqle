@@ -9,16 +9,18 @@ const initialState: AuthState = {
   token: undefined,
 };
 const authSlice = createSlice({
-  name: "auth",
+  name: "authentication",
   initialState,
   reducers: {
     setToken(state, action: PayloadAction<token>) {
       state.token = action.payload;
     },
-    clearToken(state) {
+    logout(state) {
       state.token = undefined;
+      localStorage.removeItem("persist:root");
     },
   },
 });
-export const { setToken, clearToken } = authSlice.actions;
+export const { setToken, logout } = authSlice.actions;
 export default authSlice.reducer;
+export const getToken = (state: { authentication: AuthState }) => state.authentication.token;
